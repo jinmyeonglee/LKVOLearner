@@ -35,6 +35,9 @@ def inv_rigid_transformation(rot_mat_batch, trans_batch):
 class LaplacianLayer(nn.Module):
     def __init__(self):
         super(LaplacianLayer, self).__init__()
+        """ corner와 edge를 detect하기 위해서 적절한 필터를 사용한다.
+            view는 reshape하기 위한 함
+        """
         w_nom = torch.FloatTensor([[0, -1, 0], [-1, 4, -1], [0, -1, 0]]).view(1,1,3,3)
         w_den = torch.FloatTensor([[0, 1, 0], [1, 4, 1], [0, 1, 0]]).view(1,1,3,3)
         self.register_buffer('w_nom', w_nom)
@@ -43,6 +46,7 @@ class LaplacianLayer(nn.Module):
     def forward(self, input, do_normalize=True):
         assert(input.dim() == 2 or input.dim()==3 or input.dim()==4)
         input_size = input.size()
+        # view를 reshape하여 차원을 통일시킴.
         if input.dim()==4:
             x = input.view(input_size[0]*input_size[1], 1,
                             input_size[2], input_size[3])
@@ -79,6 +83,7 @@ class GradientLayer(nn.Module):
         wy = torch.FloatTensor([[-.5], [0], [.5]]).view(1, 1, 3, 1)
         self.register_buffer('wx', wx)
         self.register_buffer('wy', wy)
+        # left, right, top, bottom 으로 복사해서 padding시키는 것.
         self.padx_func = torch.nn.ReplicationPad2d((1,1,0,0))
         self.pady_func = torch.nn.ReplicationPad2d((0,0,1,1))
 
@@ -103,6 +108,7 @@ class Twist2Mat(nn.Module):
     def __init__(self):
         super(Twist2Mat, self).__init__()
         self.register_buffer('o', torch.zeros(1,1))
+        # diagonal이 1이고 나머지는 0인 행렬
         self.register_buffer('E', torch.eye(3))
 
     def cprodmat_batch(self, a_batch):
@@ -403,13 +409,14 @@ class DirectVO(nn.Module):
 
 
         # for level_idx in range(len(ref_frames_pyramid)):
-        for level_idx in levels:
+        for level_idx in levels:  # 기본적으로 pyramid layer개수만큼 돔 (5개)
         # for level_idx in range(3):
             ref_frame = ref_frames_pyramid[level_idx].unsqueeze(0).repeat(bundle_size-1, 1, 1, 1)
             src_frame = src_frames_pyramid[level_idx]
             ref_depth = ref_inv_depth_pyramid[level_idx].unsqueeze(0).repeat(bundle_size-1, 1, 1)
             src_depth = src_inv_depth_pyramid[level_idx]
             # print(src_depth.size())
+            # 여기서 왜 그렇게 concat시킨걸 append하는 지 잘 모르겠음.
             ref_pyramid.append(torch.cat((ref_frame,
                                     src_frame), 0)/127.5)
             src_pyramid.append(torch.cat((src_frame,
