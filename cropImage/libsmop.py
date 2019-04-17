@@ -8,6 +8,8 @@ from numpy import sqrt,prod,exp,log,dot,multiply,inf,real
 from numpy.fft import fft2,ifft2
 from numpy.linalg import inv
 from numpy.linalg import qr as _qr
+from scipy.misc import imread, imsave, imresize
+
 try:
     from scipy.linalg import schur as _schur
 except ImportError:
