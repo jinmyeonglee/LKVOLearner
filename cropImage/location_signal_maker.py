@@ -32,4 +32,5 @@ def location_signal_maker(signal_number=None,*args,**kwargs):
 # location_signal_maker.m:19
         location_signal[index,2]=mesh_x(index_location)
 # location_signal_maker.m:20
+    return location_signal
     

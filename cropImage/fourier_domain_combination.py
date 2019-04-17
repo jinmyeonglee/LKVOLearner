@@ -56,5 +56,5 @@ def fourier_domain_combination(candidates=None,train_weight_term=None,train_bias
 # fourier_domain_combination.m:38
     depth=real(ifft2(fftshift(fft_map_new)))
 # fourier_domain_combination.m:39
-    a=1
+    return depth
 # fourier_domain_combination.m:41
