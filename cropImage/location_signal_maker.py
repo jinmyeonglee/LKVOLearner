@@ -2,7 +2,7 @@
 from libsmop import *
 # location_signal_maker.m
 
-    
+
 @function
 def location_signal_maker(signal_number=None,*args,**kwargs):
     varargin = location_signal_maker.varargin
@@ -20,7 +20,7 @@ def location_signal_maker(signal_number=None,*args,**kwargs):
 # location_signal_maker.m:9
     mesh_dist_value=(mesh_x ** 2 + mesh_y ** 2) + mesh_y / mesh_size + mesh_x / (mesh_size ** 2)
 # location_signal_maker.m:10
-    
+
     mesh_dist_value=mesh_dist_value + dot(signal_number,double(logical_and((mesh_y == 0),(mesh_x < 0))))
 # location_signal_maker.m:12
     mesh_dist_sort=sort(mesh_dist_value)
@@ -33,4 +33,3 @@ def location_signal_maker(signal_number=None,*args,**kwargs):
         location_signal[index,2]=mesh_x(index_location)
 # location_signal_maker.m:20
     return location_signal
-    
