@@ -10,9 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77be089e-e496-4bde-89cd-b7dd404bf502" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/LKVOLearner.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LKVOLearner.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cropImage/candidate_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/cropImage/candidate_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cropImage/fourier_domain_combination.py" beforeDir="false" afterPath="$PROJECT_DIR$/cropImage/fourier_domain_combination.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cropImage/libsmop.py" beforeDir="false" afterPath="$PROJECT_DIR$/cropImage/libsmop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cropImage/location_signal_maker.py" beforeDir="false" afterPath="$PROJECT_DIR$/cropImage/location_signal_maker.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,8 +35,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cropImage/fourier_domain_combination.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1121">
-              <caret line="60" column="33" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
+            <state relative-caret-position="779">
+              <caret line="42" selection-start-line="42" selection-end-line="42" />
               <folding>
                 <element signature="e#28#49#0" expanded="true" />
               </folding>
@@ -46,8 +47,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cropImage/candidate_generation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1463">
-              <caret line="77" column="4" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="4" />
+            <state relative-caret-position="969">
+              <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -64,11 +65,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cropImage/libsmop.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6840">
-              <caret line="360" column="27" lean-forward="true" selection-start-line="360" selection-start-column="27" selection-end-line="360" selection-end-column="27" />
-              <folding>
-                <element signature="e#90#102#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="95">
+              <caret line="5" column="12" lean-forward="true" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -140,6 +138,7 @@
       <find>frame</find>
       <find>zeros</find>
       <find>resize</find>
+      <find>&gt;&gt;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -150,6 +149,7 @@
       <list>
         <option value="$PROJECT_DIR$/cropImage/fourier_domain_combination.py" />
         <option value="$PROJECT_DIR$/cropImage/candidate_generation.py" />
+        <option value="$PROJECT_DIR$/cropImage/libsmop.py" />
       </list>
     </option>
   </component>
@@ -223,12 +223,12 @@
       <option name="presentableId" value="Default" />
       <updated>1553938221595</updated>
       <workItem from="1555476697684" duration="2228000" />
-      <workItem from="1555478976976" duration="133000" />
+      <workItem from="1555478976976" duration="406000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2361000" />
+    <option name="totallyTimeSpent" value="2634000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -291,8 +291,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cropImage/fourier_domain_combination.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1121">
-          <caret line="60" column="33" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
+        <state relative-caret-position="779">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
           <folding>
             <element signature="e#28#49#0" expanded="true" />
           </folding>
@@ -301,8 +301,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cropImage/candidate_generation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1463">
-          <caret line="77" column="4" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="4" />
+        <state relative-caret-position="969">
+          <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -362,11 +362,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cropImage/libsmop.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6840">
-          <caret line="360" column="27" lean-forward="true" selection-start-line="360" selection-start-column="27" selection-end-line="360" selection-end-column="27" />
-          <folding>
-            <element signature="e#90#102#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="95">
+          <caret line="5" column="12" lean-forward="true" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
         </state>
       </provider>
     </entry>
