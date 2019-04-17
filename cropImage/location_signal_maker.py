@@ -5,8 +5,8 @@ from libsmop import *
     
 @function
 def location_signal_maker(signal_number=None,*args,**kwargs):
-    varargin = location_signal_maker.varargin
-    nargin = location_signal_maker.nargin
+    # varargin = location_signal_maker.varargin
+    # nargin = location_signal_maker.nargin
 
     location_signal=zeros(signal_number,2)
 # location_signal_maker.m:3

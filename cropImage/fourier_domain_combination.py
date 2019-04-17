@@ -1,12 +1,13 @@
 # Generated with SMOP  0.41
 from libsmop import *
+from location_signal_maker import *
 # fourier_domain_combination.m
 
     
 @function
 def fourier_domain_combination(candidates=None,train_weight_term=None,train_bias_term=None,*args,**kwargs):
-    varargin = fourier_domain_combination.varargin
-    nargin = fourier_domain_combination.nargin
+    # varargin = fourier_domain_combination.varargin
+    # nargin = fourier_domain_combination.nargin
 
     location_signal=location_signal_maker(1605)
 # fourier_domain_combination.m:3

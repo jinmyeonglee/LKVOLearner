@@ -13,8 +13,8 @@ from libsmop import *
     
 @function
 def crop_image(img=None,*args,**kwargs):
-    varargin = crop_image.varargin
-    nargin = crop_image.nargin
+    # varargin = crop_image.varargin
+    # nargin = crop_image.nargin
 
     mask,sz=get_projection_mask(nargout=2)
 # crop_image.m:10

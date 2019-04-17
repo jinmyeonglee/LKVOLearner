@@ -5,8 +5,8 @@ from libsmop import *
     
 @function
 def candidate_generation(cropped_depths=None,*args,**kwargs):
-    varargin = candidate_generation.varargin
-    nargin = candidate_generation.nargin
+    # varargin = candidate_generation.varargin
+    # nargin = candidate_generation.nargin
 
     cropped_depths=- (225 - dot(20,cropped_depths)) ** 0.5 + 15
 # candidate_generation.m:3

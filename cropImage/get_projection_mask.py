@@ -12,8 +12,8 @@ from libsmop import *
     
 @function
 def get_projection_mask(*args,**kwargs):
-    varargin = get_projection_mask.varargin
-    nargin = get_projection_mask.nargin
+    # varargin = get_projection_mask.varargin
+    # nargin = get_projection_mask.nargin
 
     mask=false(480,640)
 # get_projection_mask.m:9
