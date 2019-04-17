@@ -4,10 +4,10 @@
 # MIT license
 
 import numpy
-from numpy import sqrt,prod,exp,log,dot,multiply,inf,real
-from numpy.fft import fft2,ifft2
+from numpy import sqrt,prod,exp,log,dot,multiply,inf
+from numpy.fft import fft2, ifft2, fftshift
 from numpy.linalg import inv
-from numpy.linalg import qr as _qr
+from numpy.linalg import qr  as _qr
 try:
     from scipy.linalg import schur as _schur
 except ImportError:
@@ -521,7 +521,7 @@ def isscalar(a):
 
 def length(a):
     try:
-        return max(np.asarray(a).shape)
+        return __builtin__.max(np.asarray(a).shape)
     except ValueError:
         return 1
 
