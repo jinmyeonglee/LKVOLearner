@@ -63,6 +63,7 @@ for filename in test_files:
     if FLAGS.use_pp:
         # flip image
         img_vars = (torch.cat((fliplr(img_var).unsqueeze(0), img_var.unsqueeze(0)), 0)-127)/127
+        # inv_depth_pyramid가 return됨.
         pred_depth_pyramid = vgg_depth_net.forward(img_vars)
         depth = pred_depth_pyramid[0]
         print(depth.size())
