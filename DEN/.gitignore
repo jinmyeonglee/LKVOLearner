@@ -1,0 +1,9 @@
+notebooks/*
+models/*
+data/*
+.ipynb_checkpoints
+__pycache__/
+*.pt*
+*.pkl
+.idea/*
+venv/*
