@@ -18,6 +18,21 @@ class Normalize(object):
 
         return {'image': img, 'depth': depth}
 
+class NormalizeKITTI(object):
+    """
+    Rescale the image in a sample to a given size.
+
+    """
+
+    def __call__(self, sample):
+        
+        frames, depth = sample['frames'], sample['depth']
+        for i in range(len(frames)):
+            frames[i] = frames[i].astype('float') / 255.0
+            depth[i] = depth[i].astype('float') / 10.0
+
+        return {'frames': frames, 'depth': depth}
+
 
 class RandomCrop(object):
     """
@@ -238,5 +253,58 @@ class FDCPreprocess(object):
                                  anti_aliasing=True, preserve_range=True).astype('float32')
         depth = np.ravel(depth)
         depth = from_numpy(depth)
+
+        return {'stacked_images': stacked_images, 'depth': depth}
+
+class FDCPreprocessKITTI(object):
+    """
+    Preprocess images and depth for the FDC module
+    images: 
+    1. crop in four corners at a give ratio
+    2. resize to (224, 224)
+    3. cast to torch tensor and stack
+    depths:
+    1. resize to (25, 32)
+    2. flatten
+    3. to torch tensor
+    """
+
+    def __init__(self, crop_ratios):
+        self.crop_ratios = crop_ratios
+
+    def __call__(self, sample):
+        frames, depth = sample['frames'], sample['depth']
+        stacked_images = []
+
+        for img in frames:
+            h, w, _ = img.shape
+            four_crop = []
+            for r in range(len(self.crop_ratios)):
+                ratio = self.crop_ratios[r]
+                h_crop, w_crop = [round(h * ratio), round(w * ratio)]
+                for i in range(4):
+                    if i == 0:  # Top-left
+                        crop = img[:h_crop, :w_crop]
+                    elif i == 1:  # Top-right
+                        crop = img[:h_crop, -w_crop:]
+                    elif i == 2:  # Bottom-left
+                        crop = img[-h_crop:, :w_crop]
+                    elif i == 3:  # Bottom-right
+                        crop = img[-h_crop:, -w_crop:]
+
+                    crop = transform.resize(crop, (224, 224), mode='reflect',
+                                            anti_aliasing=True, preserve_range=True).astype('float32')
+                    four_crop.append(crop)
+
+            # in : four_crop out : stack[ToTensor(c)]
+            # stacked_images : 3 * 4 (bundles * crops)
+            stacked_images.append(transforms.Lambda(lambda crops: stack([transforms.ToTensor()(c) for c in crops]))(four_crop))
+        
+        # depth: 3 * 1  (bundels * 1 totla depth map)
+        for i in range(len(depth)):
+            depth[i] = transform.resize(depth[i], (25, 32), mode='reflect',
+                                    anti_aliasing=True, preserve_range=True).astype('float32')
+            depth[i] = np.ravel(depth[i])
+            depth[i] = from_numpy(depth[i])
 
         return {'stacked_images': stacked_images, 'depth': depth}

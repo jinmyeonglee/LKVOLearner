@@ -12,7 +12,8 @@ model_file = '_model.pt'
 train_loss_pkl = 'train_loss.pkl'
 val_loss_pkl = 'val_loss.pkl'
 
-criterion_test = torch.nn.MSELoss(reduction='sum')
+# criterion_test = torch.nn.MSELoss(reduction='sum')
+criterion_test = torch.nn.MSELoss()
 
 def train_model(model, dataloaders, criterion, optimizer, num_epochs, device, save_dir, early_stopping_th):
         

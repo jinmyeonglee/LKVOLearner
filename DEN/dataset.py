@@ -31,7 +31,8 @@ class NyuV2(data.Dataset):
 
 class KITTIdataset(data.Dataset):
     """KITTIdataset"""
-    def __init__(self, list_file='train.txt', data_root_path='/home/gyuripyun/data_kitti', img_size=[128, 416], bundle_size=3):
+    def __init__(self, list_file='train.txt', data_root_path='/home/gyuripyun/data_kitti', img_size=[128, 416], bundle_size=3, transform=None):
+        self.gt_root_path='/home/gyuripyun/kitti_gt'
         self.data_root_path = data_root_path
         self.img_size = img_size
         self.bundle_size = bundle_size
@@ -49,8 +50,6 @@ class KITTIdataset(data.Dataset):
                     continue
                 frame_path = os.path.join(seq_path, frame_name)
                 self.frame_pathes.append(frame_path)
-                # print(frame_path)
-        # self.frame_pathes = self.frame_pathes[0:40000:800]
 
     def __len__(self):
         return len(self.frame_pathes)
@@ -60,17 +59,28 @@ class KITTIdataset(data.Dataset):
         cam_file = os.path.join(self.data_root_path, self.frame_pathes[item]+'_cam.txt')
         with open(cam_file) as file:
             cam_intrinsics = [float(x) for x in next(file).split(',')]
-        # camparams = dict(fx=cam_intrinsics[0], cx=cam_intrinsics[2],
-        #             fy=cam_intrinsics[4], cy=cam_intrinsics[5])
         camparams = np.asarray(cam_intrinsics)
 
         # read image bundle
         img_file = os.path.join(self.data_root_path, self.frame_pathes[item]+'.jpg')
+        seq, frame = self.frame_pathes[item].split("/")
+        gt_file = os.path.join(self.gt_root_path,seq[:-3],'proj_depth/groundtruth/image'+seq[-3:],frame+'.png')
         frames_cat = np.array(Image.open(img_file))
+        depth_cat = np.array(Image.open(gt_file))
+
         # slice the image into #bundle_size number of images
         frame_list = []
+        depth_list = []
         for i in range(self.bundle_size):
-            frame_list.append(frames_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])
+            frame_list.append(frames_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])  #crop image by (height * 416)*3
+            depth_list.append(depth_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])
         frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
+        depth = np.asarray(depth_list).astype(float).transpose(0, 3, 1, 2)
+        
+        sample = {'frames': frames, 'depth':depth}
 
-        return frames, camparams
+        if self.transform:
+            sample = self.transform(sample)
+    
+        #frames : frame list, depth : depth list , camparams : cam_intrinsics
+        return sample, camparams 

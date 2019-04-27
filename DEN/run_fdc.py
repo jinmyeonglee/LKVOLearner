@@ -4,7 +4,7 @@ from torchvision.transforms import Compose
 import os
 import fdc
 import transforms_nyu
-from dataset import NyuV2
+from dataset import NyuV2, KITTIdataset
 from den import DEN
 
 
@@ -25,9 +25,16 @@ transform = Compose([
     transforms_nyu.FDCPreprocess(crop_ratios)
 ])
 
-nyu = NyuV2(os.path.join(data_path, 'train'), transform=transform)
+transformKITTI = Compose([
+    transforms_nyu.NormalizeKITTI(),
+    transforms_nyu.FDCPreprocessKITTI(crop_ratios)
+])
 
-dataloader = data.DataLoader(nyu, batch_size=1, shuffle=True, num_workers=6)
+nyu = NyuV2(os.path.join(data_path, 'train'), transform=transform)
+kitti = KITTIdataset(transform=transformKITTI)
+
+# dataloader = data.DataLoader(nyu, batch_size=1, shuffle=True, num_workers=6)
+dataloader = data.DataLoader(kitti, batch_size=1, shuffle=True, num_workers=6)
 
 wts = './models/temp_v3/042_model.pt'
 den = DEN()
