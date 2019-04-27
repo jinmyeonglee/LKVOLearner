@@ -7,12 +7,15 @@
     <facet type="Python" name="Python facet">
       <configuration sdkName="Python 3.7 (LKVOLearner) (2)" />
     </facet>
+    <facet type="Python" name="Python facet">
+      <configuration sdkName="Python 3.7 (LKVOLearner) (3)" />
+    </facet>
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Python 3.7 (LKVOLearner) (2) interpreter library" level="application" />
+    <orderEntry type="library" name="Python 3.7 (LKVOLearner) (3) interpreter library" level="application" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="pytest" />

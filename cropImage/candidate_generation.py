@@ -11,7 +11,7 @@ def candidate_generation(cropped_depths=None,*args,**kwargs):
     cropped_depths=- (225 - dot(20,cropped_depths)) ** 0.5 + 15
 # candidate_generation.m:3
     
-    im_size=concat([427,561])
+    im_size=concat([128,416])
 
     candidates=zeros(concat([im_size,18]))
     index_batch=0
