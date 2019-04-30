@@ -73,9 +73,10 @@ class KITTIdataset(data.Dataset):
         depth_list = []
         for i in range(self.bundle_size):
             frame_list.append(frames_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])  #crop image by (height * 416)*3
-            depth_list.append(depth_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])
+            depth_list.append(depth_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1]])
         frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
-        depth = np.asarray(depth_list).astype(float).transpose(0, 3, 1, 2)
+        print(type(depth_list))
+        depth = np.asarray(depth_list).astype(float)
         
         sample = {'frames': frames, 'depth':depth}
 
@@ -83,4 +84,4 @@ class KITTIdataset(data.Dataset):
             sample = self.transform(sample)
     
         #frames : frame list, depth : depth list , camparams : cam_intrinsics
-        return sample, camparams 
+        return sample, camparams
