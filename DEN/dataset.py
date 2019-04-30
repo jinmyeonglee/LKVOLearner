@@ -71,12 +71,13 @@ class KITTIdataset(data.Dataset):
         # slice the image into #bundle_size number of images
         frame_list = []
         depth_list = []
-        for i in range(self.bundle_size):
+		print(frames_cat.shape, depth_cat.shape)
+		for i in range(self.bundle_size):
             frame_list.append(frames_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])  #crop image by (height * 416)*3
             depth_list.append(depth_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1]])
             
         frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
-        print(type(depth_list),len(depth_list))
+        print(type(depth_list),frame_list[0].shape,depth_list[0].shape)
         depth = np.asarray(depth_list).astype(float)
         
         sample = {'frames': frames, 'depth':depth}
