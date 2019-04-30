@@ -38,7 +38,7 @@ dataloader = data.DataLoader(kitti, batch_size=1, shuffle=True, num_workers=6)
 
 wts = './models/temp_v3/042_model.pt'
 den = DEN()
-den.load_state_dict(torch.load(wts))
+#den.load_state_dict(torch.load(wts))
 den = den.to(device)
 den.eval()
 print('DEN has been loaded')

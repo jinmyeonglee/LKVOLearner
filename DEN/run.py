@@ -84,8 +84,9 @@ dataloaders = {
                            batch_size=batch_size, shuffle=True)
 }
 
-resnet_wts = './models/pretrained_resnet/model.pt'
-model = DEN(resnet_wts)
+resnet_wts = './models/resnet152-b121ed2d.pth'
+resnet_152 = resnet152(pretrained=True)
+model = DEN()
 model = model.to(device)
 
 params_to_update = utils.params_to_update(model)
