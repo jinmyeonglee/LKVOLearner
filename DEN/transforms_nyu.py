@@ -302,6 +302,7 @@ class FDCPreprocessKITTI(object):
         
         # depth: 3 * 1  (bundels * 1 totla depth map)
         for i in range(len(depth)):
+            print(depth[i].shape)
             depth[i] = transform.resize(depth[i], (25, 32), mode='reflect',
                                     anti_aliasing=True, preserve_range=True).astype('float32')
             depth[i] = np.ravel(depth[i])
