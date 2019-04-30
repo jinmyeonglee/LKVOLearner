@@ -3,6 +3,8 @@ import pickle
 from torch.utils import data
 import numpy as np
 from PIL import Image
+from skimage import transform
+#from scipy.misc import imread, imsave, imresize
 
 
 class NyuV2(data.Dataset):
@@ -66,12 +68,13 @@ class KITTIdataset(data.Dataset):
         seq, frame = self.frame_pathes[item].split("/")
         gt_file = os.path.join(self.gt_root_path,seq[:-3],'proj_depth/groundtruth/image'+seq[-3:],frame+'.png')
         frames_cat = np.array(Image.open(img_file))
-        depth_cat = np.array(Image.open(gt_file).convert('RGB'))
+        depth_cat = np.array(Image.open(gt_file))
+        depth_cat = transform.resize(depth_cat, frames_cat.shape, mode='reflect', anti_aliasing=True)
 
         # slice the image into #bundle_size number of images
         frame_list = []
         depth_list = []
-        
+
         for i in range(self.bundle_size):
             frame_list.append(frames_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])  #crop image by (height * 416)*3
             depth_list.append(depth_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1]])
@@ -79,7 +82,7 @@ class KITTIdataset(data.Dataset):
             
         frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
         
-        depth = np.asarray(depth_list).astype(float).transpose(0,3,1,2)
+        depth = np.asarray(depth_list).astype(float)
         
         sample = {'frames': frames, 'depth':depth}
 
