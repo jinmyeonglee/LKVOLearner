@@ -39,6 +39,7 @@ class KITTIdataset(data.Dataset):
         self.img_size = img_size
         self.bundle_size = bundle_size
         self.frame_pathes = []
+        self.transform = transform
         list_file = os.path.join(data_root_path, list_file)
         with open(list_file) as file:
             for line in file:
