@@ -66,7 +66,7 @@ class KITTIdataset(data.Dataset):
         seq, frame = self.frame_pathes[item].split("/")
         gt_file = os.path.join(self.gt_root_path,seq[:-3],'proj_depth/groundtruth/image'+seq[-3:],frame+'.png')
         frames_cat = np.array(Image.open(img_file))
-        depth_cat = np.array(Image.open(gt_file))
+        depth_cat = np.array(Image.open(gt_file).convert('RGB'))
 
         # slice the image into #bundle_size number of images
         frame_list = []
@@ -78,7 +78,7 @@ class KITTIdataset(data.Dataset):
             
         frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
         print(type(depth_list),frame_list[0].shape,depth_list[0].shape)
-        depth = np.asarray(depth_list).astype(float)
+        depth = np.asarray(depth_list).astype(float).transpose(0,3,1,2)
         
         sample = {'frames': frames, 'depth':depth}
 
