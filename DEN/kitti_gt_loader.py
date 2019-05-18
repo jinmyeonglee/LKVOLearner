@@ -13,10 +13,10 @@ class kitti_gt_loader(object):
                  seq_length=5):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         # static_frames_file = dir_path + '/static_frames.txt'
-        test_scene_file = dir_path + '/test_scenes_' + split + '.txt'
-        with open(test_scene_file, 'r') as f:
-            test_scenes = f.readlines()
-        self.test_scenes = [t[:-1] for t in test_scenes]
+        # test_scene_file = dir_path + '/test_scenes_' + split + '.txt'
+        # with open(test_scene_file, 'r') as f:
+        #     test_scenes = f.readlines()
+        # self.test_scenes = [t[:-1] for t in test_scenes]
         self.dataset_dir = dataset_dir
         self.img_height = img_height
         self.img_width = img_width
@@ -46,8 +46,8 @@ class kitti_gt_loader(object):
             for dr in drive_set:
                 drive_dir = os.path.join(self.dataset_dir, date, dr)
                 if os.path.isdir(drive_dir):
-                    if dr[:-5] in self.test_scenes:
-                        continue
+                    # if dr[:-5] in self.test_scenes:
+                    #     continue
                     for cam in self.cam_ids:
                         img_dir = os.path.join(drive_dir, 'image_' + cam, 'data')
                         N = len(glob(img_dir + '/*.png'))
