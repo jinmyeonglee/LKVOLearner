@@ -46,6 +46,7 @@ class kitti_gt_loader(object):
         # for date in self.date_list:
         drive_set = os.listdir(self.dataset_dir + "train/")
         for dr in drive_set:
+            print(dr)
             drive_dir = os.path.join(self.dataset_dir, "train", dr)
             if os.path.isdir(drive_dir):
                 # if dr[:-5] in self.test_scenes:
@@ -56,13 +57,6 @@ class kitti_gt_loader(object):
                     for n in range(N):
                         frame_id = '%.10d' % n
                         all_frames.append(dr + ' ' + cam + ' ' + frame_id)
-                        
-        # for s in self.static_frames:
-        #     try:
-        #         all_frames.remove(s)
-        #         # print('removed static frame from training: %s' % s)
-        #     except:
-        #         pass
 
         self.train_frames = all_frames
         self.num_train = len(self.train_frames)
