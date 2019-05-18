@@ -41,19 +41,19 @@ class kitti_gt_loader(object):
         
     def collect_train_frames(self):
         all_frames = []
-        for date in self.date_list:
-            drive_set = os.listdir(self.dataset_dir + "/train/")
-            for dr in drive_set:
-                drive_dir = os.path.join(self.dataset_dir, "train", dr)
-                if os.path.isdir(drive_dir):
-                    # if dr[:-5] in self.test_scenes:
-                    #     continue
-                    for cam in self.cam_ids:
-                        img_dir = os.path.join(drive_dir, 'image_' + cam, 'data')
-                        N = len(glob(img_dir + '/*.png'))
-                        for n in range(N):
-                            frame_id = '%.10d' % n
-                            all_frames.append(dr + ' ' + cam + ' ' + frame_id)
+        # for date in self.date_list:
+        drive_set = os.listdir(self.dataset_dir + "train/")
+        for dr in drive_set:
+            drive_dir = os.path.join(self.dataset_dir, "train", dr)
+            if os.path.isdir(drive_dir):
+                # if dr[:-5] in self.test_scenes:
+                #     continue
+                for cam in self.cam_ids:
+                    img_dir = os.path.join(drive_dir, 'image_' + cam, 'data')
+                    N = len(glob(img_dir + '/*.png'))
+                    for n in range(N):
+                        frame_id = '%.10d' % n
+                        all_frames.append(dr + ' ' + cam + ' ' + frame_id)
                         
         # for s in self.static_frames:
         #     try:
