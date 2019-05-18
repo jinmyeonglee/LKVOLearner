@@ -48,6 +48,7 @@ class kitti_gt_loader(object):
         for dr in drive_set:
             print(dr)
             drive_dir = os.path.join(self.dataset_dir, "train", dr)
+            print(os.path.isdir(drive_dir))
             if os.path.isdir(drive_dir):
                 # if dr[:-5] in self.test_scenes:
                 #     continue
