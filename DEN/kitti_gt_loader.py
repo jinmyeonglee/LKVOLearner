@@ -11,6 +11,7 @@ class kitti_gt_loader(object):
                  img_height=256,
                  img_width=256,
                  seq_length=5):
+        print("in init")
         dir_path = os.path.dirname(os.path.realpath(__file__))
         # static_frames_file = dir_path + '/static_frames.txt'
         # test_scene_file = dir_path + '/test_scenes_' + split + '.txt'
@@ -40,6 +41,7 @@ class kitti_gt_loader(object):
     #             self.static_frames.append(drive + ' ' + cid + ' ' + curr_fid)
         
     def collect_train_frames(self):
+        print('collect_train_frames')
         all_frames = []
         # for date in self.date_list:
         drive_set = os.listdir(self.dataset_dir + "train/")
@@ -66,6 +68,7 @@ class kitti_gt_loader(object):
         self.num_train = len(self.train_frames)
 
     def is_valid_sample(self, frames, tgt_idx):
+        print('is_valid_sample')
         N = len(frames)
         tgt_drive, cid, _ = frames[tgt_idx].split(' ')
         half_offset = int((self.seq_length - 1)/2)
@@ -80,12 +83,14 @@ class kitti_gt_loader(object):
         return False
 
     def get_train_example_with_idx(self, tgt_idx):
+        print("get_train_example_with_idx")
         if not self.is_valid_sample(self.train_frames, tgt_idx):
             return False
         example = self.load_example(self.train_frames, tgt_idx)
         return example
 
     def load_image_sequence(self, frames, tgt_idx, seq_length):
+        print('load_image_sequence')
         half_offset = int((seq_length - 1)/2)
         image_seq = []
         for o in range(-half_offset, half_offset + 1):
@@ -100,6 +105,7 @@ class kitti_gt_loader(object):
         return image_seq, zoom_x, zoom_y
 
     def load_example(self, frames, tgt_idx):
+        print("load_example")
         image_seq, _, _ = self.load_image_sequence(frames, tgt_idx, self.seq_length)
         tgt_drive, tgt_cid, tgt_frame_id = frames[tgt_idx].split(' ')
         # intrinsics = self.load_intrinsics_raw(tgt_drive, tgt_cid, tgt_frame_id)
@@ -112,6 +118,7 @@ class kitti_gt_loader(object):
         return example
 
     def load_image_raw(self, drive, cid, frame_id):
+        print('load_image_raw')
         date = drive[:10]
         print(drive)
         # img_file = os.path.join(self.dataset_dir, date, drive, 'image_' + cid,  frame_id + '.png')
