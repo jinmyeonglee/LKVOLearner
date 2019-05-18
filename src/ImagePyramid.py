@@ -48,7 +48,7 @@ class ImageSmoothLayer(nn.Module):
                     padding=0)
 
         if output_dim==2:
-            x =  x.squeeze(0).squeeze(0)
+            x =  x.squeeze(0). squeeze(0)
         elif output_dim==3:
             x =  x.squeeze(1)
 

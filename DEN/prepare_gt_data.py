@@ -63,6 +63,8 @@ def main():
 
     Parallel(n_jobs=args.num_threads)(delayed(dump_example)(n, args) for n in range(data_loader.num_train))
 
+    
+
     # Split into train/val
     
     # subfolders = os.listdir(args.dump_root)
