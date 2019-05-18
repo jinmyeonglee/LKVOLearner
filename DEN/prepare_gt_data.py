@@ -16,6 +16,7 @@ parser.add_argument("--num_threads", type=int, default=4, help="number of thread
 args = parser.parse_args()
 
 def concat_image_seq(seq):
+    res = None
     for i, im in enumerate(seq):
         if i == 0:
             res = im
@@ -30,11 +31,6 @@ def dump_example(n, args):
     if example == False:
         return
     image_seq = concat_image_seq(example['image_seq'])
-    # intrinsics = example['intrinsics']
-    # fx = intrinsics[0, 0]
-    # fy = intrinsics[1, 1]
-    # cx = intrinsics[0, 2]
-    # cy = intrinsics[1, 2]
     dump_dir = os.path.join(args.dump_root, example['folder_name'])
     # if not os.path.isdir(dump_dir):
     #     os.makedirs(dump_dir, exist_ok=True)
@@ -44,10 +40,11 @@ def dump_example(n, args):
         if not os.path.isdir(dump_dir):
             raise
     dump_img_file = dump_dir + '/%s.jpg' % example['file_name']
-    scipy.misc.imsave(dump_img_file, image_seq.astype(np.uint8))
-    # dump_cam_file = dump_dir + '/%s_cam.txt' % example['file_name']
-    # with open(dump_cam_file, 'w') as f:
-    #     f.write('%f,0.,%f,0.,%f,%f,0.,0.,1.' % (fx, cx, fy, cy))
+    try:
+        scipy.misc.imsave(dump_img_file, image_seq.astype(np.uint8))
+        print(dump_img_file, "saved!")
+    except:
+        print("There is no", dump_img_file)
 
 def main():
     if not os.path.exists(args.dump_root):
