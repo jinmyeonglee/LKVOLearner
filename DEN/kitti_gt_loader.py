@@ -42,9 +42,9 @@ class kitti_gt_loader(object):
     def collect_train_frames(self):
         all_frames = []
         for date in self.date_list:
-            drive_set = os.listdir(self.dataset_dir + date + '/')
+            drive_set = os.listdir(self.dataset_dir + "/train/")
             for dr in drive_set:
-                drive_dir = os.path.join(self.dataset_dir, date, dr)
+                drive_dir = os.path.join(self.dataset_dir, "train", dr)
                 if os.path.isdir(drive_dir):
                     # if dr[:-5] in self.test_scenes:
                     #     continue
