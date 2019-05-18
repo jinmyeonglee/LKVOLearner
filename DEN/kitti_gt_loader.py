@@ -113,7 +113,9 @@ class kitti_gt_loader(object):
 
     def load_image_raw(self, drive, cid, frame_id):
         date = drive[:10]
-        img_file = os.path.join(self.dataset_dir, date, drive, 'image_' + cid, 'data', frame_id + '.png')
+        print(drive)
+        # img_file = os.path.join(self.dataset_dir, date, drive, 'image_' + cid,  frame_id + '.png')
+        img_file = os.path.join(self.dataset_dir, "train", drive + "_sync", "proj_depth", "groundtruth", "image_"+cid, frame_id + '.png')
         img = scipy.misc.imread(img_file)
         return img
 
