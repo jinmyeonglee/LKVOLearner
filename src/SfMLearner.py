@@ -71,6 +71,7 @@ class SfMKernel(nn.Module):
         self.img_size = img_size
         self.fliplr_func = FlipLR(imW=img_size[1], dim_w=3)
         self.vo = DirectVO(imH=img_size[0], imW=img_size[1], pyramid_layer_num=4)
+        # TODO: Vgg -> FDEDpthEstimator
         self.depth_net = VggDepthEstimator(img_size)
         if use_expl_mask:
             self.pose_net = PoseExpNet(3)

@@ -43,6 +43,8 @@ den = den.to(device)
 den.eval()
 print('DEN has been loaded')
 
+
+# fdc initialize with model den.
 fdc_model = fdc.FDC(den)
 f_m_hat, f = fdc_model.forward(dataloader)
 fdc_model.fit(f_m_hat, f)

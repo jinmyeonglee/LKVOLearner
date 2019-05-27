@@ -6,8 +6,15 @@ from torch.autograd import Variable
 import numpy as np
 
 
+import DEN.modeling
+import DEN.fdc
+import DEN.den
+
+
 DISP_SCALING = 10
 MIN_DISP = 0.01
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class ConvBlock(nn.Module):
     def __init__(self, input_nc, output_nc, kernel_size):
@@ -56,6 +63,17 @@ class Conv(nn.Module):
             return self.conv(self.pad_fn(input))
         else:
             return self.activation_fn(self.conv(self.pad_fn(input)))
+
+
+class FDCInverseDepthMap(DEN.fdc.FDC):
+    def getInverseDepthMap(self, batch):
+        predictions = DEN.fdc.FDC.__call__(self, batch)
+        inversed = []
+        for i in range(len(predictions)):
+            for j in range(predictions[i].shape[0]):
+                predictions[i][j] = torch.tensor(list(map(lambda x: 0 if 1 / x == float('inf') else 1 / x, predictions[i][j])))
+        
+        return inversed
 
 
 class VggDepthEstimator(nn.Module):
@@ -153,6 +171,28 @@ class VggDepthEstimator(nn.Module):
             invdepth_pyramid[i] = invdepth_pyramid[i].squeeze(1)*DISP_SCALING+MIN_DISP
         return invdepth_pyramid
         # return invdepth_pyramid, invdepth0_pyramid, normalize_convfeat_pyramid(conv_feats_output)
+
+
+class FDCDepthEstimator(nn.Module):
+    def __init__(self, input_size=None):
+        den = DEN.den.DEN()
+        den = den.to(device)
+        den.eval()
+
+        self.fdc_model = FDCInverseDepthMap(den)
+        self.fdc_model.load_weights('./temp/path')
+
+    # run run_fdc.py before train posnet.
+    # TODO: foward function should return invdepth_pyramid
+    def forward(self, input):
+        invdepth_pyramid = []
+        # TODO: check num_pyramid
+        num_pyramid = 5  # temp
+        for i in range(num_pyramid):
+            # TODO: following Vgg's forward
+            invdepth_pyramid.append(self.fdc_model.getInverseDepthMap(input))
+        return invdepth_pyramid
+
 
 class PoseNet(nn.Module):
     def __init__(self, bundle_size):

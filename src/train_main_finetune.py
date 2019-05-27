@@ -54,14 +54,8 @@ def vis_depthmap(input):
     return x.unsqueeze(2).repeat(1, 1, 3)
 
 
-
-
-
 optimizer = optim.Adam(lkvolearner.get_parameters(), lr=.0001)
-
 step_num = 0
-
-
 
 for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
     t = timer()

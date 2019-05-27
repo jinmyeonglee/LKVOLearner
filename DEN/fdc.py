@@ -33,8 +33,6 @@ class FDC:
 
         return predictions
         
-
-
     def fit(self, f_m_hat, f):
         """
         f_m_hat: (T, M, K)
