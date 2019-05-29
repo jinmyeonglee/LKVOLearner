@@ -65,7 +65,7 @@ class KITTIdataset(data.Dataset):
         # read image bundle
         img_file = os.path.join(self.data_root_path, self.frame_pathes[item]+'.jpg')
         seq, frame = self.frame_pathes[item].split("/")
-        gt_file = os.path.join(self.gt_root_path,seq[:-3],'proj_depth/groundtruth/image'+seq[-3:],frame+'.png')
+        gt_file = os.path.join(self.gt_root_path,self.frame_pathes[item]+'.jpg')
         frames_cat = np.array(Image.open(img_file))
         depth_cat = np.array(Image.open(gt_file))
         depth_cat = transform.resize(depth_cat, frames_cat.shape, mode='reflect', anti_aliasing=True)
