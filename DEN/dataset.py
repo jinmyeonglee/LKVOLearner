@@ -31,8 +31,8 @@ class NyuV2(data.Dataset):
 
 class KITTIdataset(data.Dataset):
     """KITTIdataset"""
-    def __init__(self, list_file='train.txt', data_root_path='/home/gyuripyun/data_kitti', img_size=[128, 416], bundle_size=3, transform=None):
-        self.gt_root_path='/home/gyuripyun/kitti_gt'
+    def __init__(self, list_file='train.txt', data_root_path='/data/raw_data_prepared', img_size=[128, 416], bundle_size=3, transform=None):
+        self.gt_root_path='/data/gt_data_prepared'
         self.data_root_path = data_root_path
         self.img_size = img_size
         self.bundle_size = bundle_size
@@ -65,7 +65,7 @@ class KITTIdataset(data.Dataset):
         # read image bundle
         img_file = os.path.join(self.data_root_path, self.frame_pathes[item]+'.jpg')
         seq, frame = self.frame_pathes[item].split("/")
-        gt_file = os.path.join(self.gt_root_path,seq[:-3],'proj_depth/groundtruth/image'+seq[-3:],frame+'.png')
+        gt_file = os.path.join(self.gt_root_path,self.frame_pathes[item]+'.jpg')
         frames_cat = np.array(Image.open(img_file))
         depth_cat = np.array(Image.open(gt_file))
         depth_cat = transform.resize(depth_cat, frames_cat.shape, mode='reflect', anti_aliasing=True)
