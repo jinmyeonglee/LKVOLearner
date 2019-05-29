@@ -4,8 +4,6 @@ from torch.utils import data
 import numpy as np
 from PIL import Image
 from skimage import transform
-#from scipy.misc import imread, imsave, imresize
-
 
 class NyuV2(data.Dataset):
 
