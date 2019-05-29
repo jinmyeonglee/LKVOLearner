@@ -167,11 +167,14 @@ class VggDepthEstimator(nn.Module):
         invdepth_pyramid = invdepth_pyramid[-1::-1]
         invdepth_pyramid = invdepth_pyramid[0:5]
         # conv_feats_output = conv_feats_output[0:5]
+    
         for i in range(len(invdepth_pyramid)):
+            # *10 + 0.01 
+            print(i,': before squeeze',invdepth_pyramid[i].shape)
             invdepth_pyramid[i] = invdepth_pyramid[i].squeeze(1)*DISP_SCALING+MIN_DISP
+            print(i,': after squeeze',invdepth_pyramid[i].shape)
+            print()
         return invdepth_pyramid
-        # return invdepth_pyramid, invdepth0_pyramid, normalize_convfeat_pyramid(conv_feats_output)
-
 
 class FDCDepthEstimator(nn.Module):
     def __init__(self, input_size=None):
