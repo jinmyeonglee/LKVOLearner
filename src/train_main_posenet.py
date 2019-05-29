@@ -7,11 +7,12 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 import scipy.io as sio
 import os
-
+import sys
+sys.path.insert(0, '/home/pyun/LKVOLearner/DEN')
 from SfMLearner import SfMLearner
 #from KITTIdataset import KITTIdataset
-from DEN.dataset import KITTIdataset
-import DEN.transforms_nyu
+from dataset import KITTIdataset
+import transforms_nyu
 from torchvision.transforms import Compose
 
 # from KCSdataset import KCSdataset
@@ -31,8 +32,8 @@ visualizer = Visualizer(opt)
 crop_ratios = [0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]
 
 transformKITTI = Compose([
-            DEN.transforms_nyu.NormalizeKITTI(),
-            DEN.transforms_nyu.FDCPreprocessKITTI(crop_ratios)
+            transforms_nyu.NormalizeKITTI(),
+            transforms_nyu.FDCPreprocessKITTI(crop_ratios)
         ])
 kitti = KITTIdataset(transform=transformKITTI,img_size=img_size, bundle_size=3)
 dataloader = DataLoader(kitti, batch_size=1, shuffle=True, num_workers=4, pin_memory=True)
