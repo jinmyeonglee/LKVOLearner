@@ -4,11 +4,12 @@ from torch.nn import init
 import functools
 from torch.autograd import Variable
 import numpy as np
+import sys
+sys.path.insert(0, '/home/pyun/LKVOLearner/DEN')
 
-
-import DEN.modeling
-import DEN.fdc
-import DEN.den
+import modeling
+import fdc
+import den
 
 
 DISP_SCALING = 10
@@ -65,9 +66,9 @@ class Conv(nn.Module):
             return self.activation_fn(self.conv(self.pad_fn(input)))
 
 
-class FDCInverseDepthMap(DEN.fdc.FDC):
+class FDCInverseDepthMap(fdc.FDC):
     def getInverseDepthMap(self, batch):
-        predictions = DEN.fdc.FDC.__call__(self, batch)
+        predictions = fdc.FDC.__call__(self, batch)
         inversed = []
         for i in range(len(predictions)):
             for j in range(predictions[i].shape[0]):
@@ -178,7 +179,7 @@ class VggDepthEstimator(nn.Module):
 
 class FDCDepthEstimator(nn.Module):
     def __init__(self, input_size=None):
-        den = DEN.den.DEN()
+        den = den.DEN()
         den = den.to(device)
         den.eval()
 
