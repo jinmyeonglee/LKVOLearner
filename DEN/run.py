@@ -77,10 +77,10 @@ nyu = {
 }
 
 dataloaders = {
-    'train': data.DataLoader(nyu['train'], num_workers=8,
+    'train': data.DataLoader(nyu['train'], num_workers=4,
                              batch_size=batch_size, shuffle=True),
 
-    'val': data.DataLoader(nyu['val'], num_workers=8,
+    'val': data.DataLoader(nyu['val'], num_workers=4,
                            batch_size=batch_size, shuffle=True)
 }
 
