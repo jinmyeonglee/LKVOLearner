@@ -36,7 +36,7 @@ transformKITTI = Compose([
             transforms_nyu.FDCPreprocessKITTI(crop_ratios)
         ])
 dataset = KITTIdataset(transform=transformKITTI,img_size=img_size, bundle_size=3)
-dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=4, pin_memory=True)
+dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=2, pin_memory=True)
 
 
 # dataset = KITTIdataset(data_root_path=opt.dataroot, img_size=img_size, bundle_size=3)
