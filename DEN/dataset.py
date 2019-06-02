@@ -68,6 +68,7 @@ class KITTIdataset(data.Dataset):
         gt_file = os.path.join(self.gt_root_path,self.frame_pathes[item]+'.jpg')
         frames_cat = np.array(Image.open(img_file))
         depth_cat = np.array(Image.open(gt_file))
+        depth_cat = np.expand_dims(depth_cat,axis=2)
         #depth_cat = transform.resize(depth_cat, frames_cat.shape, mode='reflect', anti_aliasing=True)
 
         # slice the image into #bundle_size number of images
