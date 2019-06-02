@@ -96,6 +96,8 @@ class SfMKernel(nn.Module):
         bundle_size = frames.size(0)
         src_frame_idx = tuple(range(0,ref_frame_idx)) + tuple(range(ref_frame_idx+1,bundle_size))
         frames_pyramid = self.vo.pyramid_func(frames)
+        for frame in frames_pyramid :
+            print(frame.shape)
         ref_frame_pyramid = [frame[ref_frame_idx, :, :, :] for frame in frames_pyramid]
         src_frames_pyramid = [frame[src_frame_idx, :, :, :] for frame in frames_pyramid]
 
