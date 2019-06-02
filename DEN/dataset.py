@@ -80,9 +80,10 @@ class KITTIdataset(data.Dataset):
             depth_list.append(depth_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])
             #print(frame_list[i].shape, depth_list[i].shape)
             
-        frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
+        # frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
+        frames = np.asarray(frame_list).astype(float)
         
-        depth = np.asarray(depth_list)
+        depth = np.asarray(depth_list).astype(float)
         
         sample = {'frames': frames, 'depth':depth}
 
