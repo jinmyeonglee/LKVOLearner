@@ -275,7 +275,7 @@ class FDCPreprocessKITTI(object):
     def __call__(self, sample):
         frames, depth = sample['frames'], sample['depth']
         stacked_images = []
-
+        print(frames.shape, depth.shape)
         for img in frames:
             h, w, _ = img.shape
             four_crop = []
@@ -292,8 +292,10 @@ class FDCPreprocessKITTI(object):
                     elif i == 3:  # Bottom-right
                         crop = img[-h_crop:, -w_crop:]
 
+                    print('before transform : ',crop.shape)
                     crop = transform.resize(crop, (224, 224), mode='reflect',
                                             anti_aliasing=True, preserve_range=True).astype('float32')
+                    print('after transform : ',crop.shape)
                     four_crop.append(crop)
 
             # in : four_crop out : stack[ToTensor(c)]
