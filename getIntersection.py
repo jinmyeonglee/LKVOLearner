@@ -19,13 +19,13 @@ for i in range(2):
 
 intersect = sets[0].intersection(sets[1])
 
-with open(path[i]+ 'train.txt', 'w') as tf:
-    with open(path[i] + 'val.txt', 'w') as vf:
+with open(path[0]+ 'train.txt', 'w') as tf:
+    with open(path[0] + 'val.txt', 'w') as vf:
         for item in list(intersect):
             if np.random.random() < 0.1:
-                vf.write(item)
+                vf.write(item+'\n')
             else:
-                tf.write(item)
+                tf.write(item+'\n')
 
 
 
