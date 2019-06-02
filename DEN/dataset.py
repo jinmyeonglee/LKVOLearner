@@ -87,8 +87,8 @@ class KITTIdataset(data.Dataset):
         
         sample = {'frames': frames, 'depth':depth_list}
 
-        if self.transform:
-            sample = self.transform(sample)
+        # if self.transform:
+        #     sample = self.transform(sample)
     
         #frames : frame list, depth : depth list , camparams : cam_intrinsics
         return sample, camparams
