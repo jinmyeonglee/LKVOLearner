@@ -83,7 +83,7 @@ class KITTIdataset(data.Dataset):
         # frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
         frames = np.asarray(frame_list).astype(float)
         
-        depth = np.asarray(depth_list).astype(float)
+        #depth = np.asarray(depth_list).astype(float)
         
         sample = {'frames': frames, 'depth':depth}
 
