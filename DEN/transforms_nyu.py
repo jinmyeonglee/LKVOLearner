@@ -275,7 +275,6 @@ class FDCPreprocessKITTI(object):
     def __call__(self, sample):
         frames, depth = sample['frames'], sample['depth']
         stacked_images = []
-        print(frames.shape, depth.shape)
         for img in frames:
             h, w, _ = img.shape
             four_crop = []
