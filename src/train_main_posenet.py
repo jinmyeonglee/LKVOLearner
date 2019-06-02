@@ -76,7 +76,7 @@ for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
     for ii, data in enumerate(dataloader):
         optimizer.zero_grad()
         frames = Variable(data[0]['frames'].float().cuda())
-        depth = Variable(data[0]['depth'].float().cuda())
+        depth = Variable(data[0]['depth'].cuda())
         camparams = Variable(data[1])
         cost, photometric_cost, smoothness_cost, frames, inv_depths, _ = \
             sfmlearner.forward(frames, camparams)
