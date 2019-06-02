@@ -85,7 +85,7 @@ class KITTIdataset(data.Dataset):
         
         #depth = np.asarray(depth_list).astype(float)
         
-        sample = {'frames': frames, 'depth':depth}
+        sample = {'frames': frames, 'depth':depth_list}
 
         if self.transform:
             sample = self.transform(sample)
