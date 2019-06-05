@@ -302,7 +302,7 @@ class FDCPreprocessKITTI(object):
                 stacked_images = torch.cat((stacked_images, transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(c) for c in crops]))(four_crop)), 0)
                 stacked_images = torch.unsqueeze(stacked_images, 0)
             else:
-                stacked_images = torch.cat(stacked_images, torch.unsqueeze(transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(c) for c in crops]))(four_crop), 0), 0)
+                stacked_images = torch.cat((stacked_images, torch.unsqueeze(transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(c) for c in crops]))(four_crop), 0)), 0)
             
             print("stacked images :", stacked_images.shape)
         # depth: 3 * 1  (bundels * 1 totla depth map)
@@ -314,8 +314,8 @@ class FDCPreprocessKITTI(object):
             depth[i] = torch.from_numpy(depth[i])
             print("depth[i] :",depth[i].shape)
             if stacked_depth.shape == torch.Size([0]):
-                stacked_depth = torch.cat((stacked_depth,depth[i]),0)
+                stacked_depth = torch.cat((stacked_depth, depth[i]),0)
                 stacked_depth = torch.unsqueeze(stacked_depth, 0)
             else:
-                stacked_depth = torch.cat(stacked_depth, torch.unsqueeze(depth[i], 0), 0)
+                stacked_depth = torch.cat((stacked_depth, torch.unsqueeze(depth[i], 0)), 0)
         return {'stacked_images': stacked_images, 'depth': stacked_depth}
