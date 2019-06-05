@@ -306,5 +306,5 @@ class FDCPreprocessKITTI(object):
                                     anti_aliasing=True, preserve_range=True).astype('float32')
             depth[i] = np.ravel(depth[i])
             depth[i] = from_numpy(depth[i])
-
+        depth = stack(depth)
         return {'stacked_images': stacked_images, 'depth': depth}
