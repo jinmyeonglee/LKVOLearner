@@ -1,4 +1,4 @@
-from torch import from_numpy, stack
+from torch import from_numpy, stack, cat, empty
 import numpy as np
 from skimage import transform
 from torchvision import transforms
@@ -274,7 +274,7 @@ class FDCPreprocessKITTI(object):
 
     def __call__(self, sample):
         frames, depth = sample['frames'], sample['depth']
-        stacked_images = []
+        stacked_images = empty(0)
         for img in frames:
             h, w, _ = img.shape
             four_crop = []
@@ -297,14 +297,14 @@ class FDCPreprocessKITTI(object):
 
             # in : four_crop out : stack[ToTensor(c)]
             # stacked_images : 3 * 4 (bundles * crops)
-            stacked_images.append(transforms.Lambda(lambda crops: stack([transforms.ToTensor()(c) for c in crops]))(four_crop))
-        stacked_images = stack(stacked_images)
+            stacked_images = cat((stacked_images, transforms.Lambda(lambda crops: stack([transforms.ToTensor()(c) for c in crops]))(four_crop)), 0)
+        
         # depth: 3 * 1  (bundels * 1 totla depth map)
+        stacked_depth = empty(0)
         for i in range(len(depth)):
-            print(depth[i].shape)
             depth[i] = transform.resize(depth[i], (25, 32), mode='reflect',
                                     anti_aliasing=True, preserve_range=True).astype('float32')
             depth[i] = np.ravel(depth[i])
             depth[i] = from_numpy(depth[i])
-        depth = stack(depth)
-        return {'stacked_images': stacked_images, 'depth': depth}
+            stacked_depth = cat((stacked_depth,depth[i]),0)
+        return {'stacked_images': stacked_images, 'depth': stacked_depth}
