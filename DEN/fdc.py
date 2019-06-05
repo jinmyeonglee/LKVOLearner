@@ -79,8 +79,9 @@ class FDC:
         print('Forward phase')
         f_m_hat = torch.empty([len(dataloader.dataset), len(crop_ratios), ncoeff])
         f = torch.empty([len(dataloader.dataset), ncoeff])
-
+        print("before eval")
         self.model.eval()
+        print("after eval")
         with torch.no_grad():
             for t, data in enumerate(dataloader):
                 inputs = data['stacked_images'].to(device).float()
@@ -88,7 +89,7 @@ class FDC:
 
                 bsz, ncrops, c, h, w = inputs.size()
                 print(bsz, ncrops, c, h, w)
-                result = self.model(inputs.view(-1, c, h, w))  #decrease dimension
+                result = self.model(inputs.view(-1, c, h, w))  # decrease dimension
                 print(result.shape)
                 candidates = self.merge_crops(result)
                 f_m_hat[t] = self.img2fourier(candidates)
