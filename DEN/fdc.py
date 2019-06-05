@@ -87,7 +87,9 @@ class FDC:
                 labels = data['depth'].to(device).float()
 
                 bsz, ncrops, c, h, w = inputs.size()
+                print(bsz, ncrops, c, h, w)
                 result = self.model(inputs.view(-1, c, h, w))  #decrease dimension
+                print(result.shape)
                 candidates = self.merge_crops(result)
                 f_m_hat[t] = self.img2fourier(candidates)
                 f[t] = self.img2fourier(labels.view(1, depth_size[0], depth_size[1]))
