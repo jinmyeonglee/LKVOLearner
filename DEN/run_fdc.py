@@ -53,3 +53,4 @@ fdc_model = fdc.FDC(den)
 f_m_hat, f = fdc_model.forward(dataloader)
 fdc_model.fit(f_m_hat, f)
 fdc_model.save_weights('./models/FDC/den_dbe/')
+
