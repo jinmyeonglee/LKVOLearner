@@ -36,7 +36,7 @@ nyu = NyuV2(os.path.join(data_path, 'train'), transform=transform)
 kitti = KITTIdataset(transform=transformKITTI)
 
 # dataloader = data.DataLoader(nyu, batch_size=1, shuffle=True, num_workers=6)
-dataloader = data.DataLoader(kitti, batch_size=1, shuffle=True, num_workers=2)
+dataloader = data.DataLoader(kitti, batch_size=1, shuffle=True, num_workers=0)
 
 #wts = './models/temp_v3/042_model.pt'
 resnet_wts = './models/resnet152-b121ed2d.pth'
