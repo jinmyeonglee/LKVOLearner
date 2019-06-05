@@ -10,7 +10,7 @@ from den import DEN
 
 
 
-data_path = './data/nyu_v2/'
+data_path = '/data/nyu_v2/'
 
 seed = 2
 torch.manual_seed(seed)
