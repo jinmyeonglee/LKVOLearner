@@ -297,8 +297,9 @@ class FDCPreprocessKITTI(object):
 
             # in : four_crop out : stack[ToTensor(c)]
             # stacked_images : 3 * 4 (bundles * crops)
+
             stacked_images = cat((stacked_images, transforms.Lambda(lambda crops: stack([transforms.ToTensor()(c) for c in crops]))(four_crop)), 0)
-        
+            print("stacked images :", stacked_images.shape)
         # depth: 3 * 1  (bundels * 1 totla depth map)
         stacked_depth = empty(0)
         for i in range(len(depth)):
@@ -306,5 +307,6 @@ class FDCPreprocessKITTI(object):
                                     anti_aliasing=True, preserve_range=True).astype('float32')
             depth[i] = np.ravel(depth[i])
             depth[i] = from_numpy(depth[i])
+            print("depth[i] :",depth[i].shape)
             stacked_depth = cat((stacked_depth,depth[i]),0)
         return {'stacked_images': stacked_images, 'depth': stacked_depth}
