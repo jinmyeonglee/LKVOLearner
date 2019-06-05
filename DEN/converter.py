@@ -5,7 +5,7 @@ import pickle
 
 
 # data path
-data_path = './data/nyu_v2/'
+data_path = '/data/nyu_v2/'
 data_file = '/data/nyu_depth_v2_labeled.mat'
 # read mat file
 f = h5py.File(data_file)
