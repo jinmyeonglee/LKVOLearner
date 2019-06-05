@@ -89,6 +89,7 @@ class KITTIdataset(data.Dataset):
 
         if self.transform:
             sample = self.transform(sample)  # : 3*128*416->3*4*128*416
+        print('in dataset 92th line :'sample['stacked_images'].shape)
         sample['stacked_images'] = sample['stacked_images'].permute(0,1,4,2,3)
         #frames : frame list, depth : depth list , camparams : cam_intrinsics
         # return sample, camparams
