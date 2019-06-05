@@ -95,7 +95,7 @@ class SfMKernel(nn.Module):
 
         bundle_size = frames.size(0)
         src_frame_idx = tuple(range(0,ref_frame_idx)) + tuple(range(ref_frame_idx+1,bundle_size))
-        frames_pyramid = self.vo.pyramid_func(frames)
+        frames_pyramid = self.vo.pyramid_func(frames)#not cropped frame
         for frame in frames_pyramid :
             print(frame.shape)
         ref_frame_pyramid = [frame[ref_frame_idx, :, :, :] for frame in frames_pyramid]
@@ -125,7 +125,9 @@ class SfMKernel(nn.Module):
         trans_batch = p[0,:,3:6]
 
         # TODO: change here
-        inv_depth_pyramid = self.depth_net.forward((frames-127)/127)
+        # inv_depth_pyramid : not cropped depth
+        # input frames : cropped frames
+        inv_depth_pyramid = self.depth_net.forward((frames-127)/127) 
         inv_depth_mean_ten = inv_depth_pyramid[0].mean()*0.1 #uncommment this to use normalization
 
         # normalize

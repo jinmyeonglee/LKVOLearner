@@ -1,11 +1,13 @@
 import torch
 from torch.utils import data
 from torchvision.transforms import Compose
+from torchvision.models import resnet152
 import os
 import fdc
 import transforms_nyu
 from dataset import NyuV2, KITTIdataset
 from den import DEN
+
 
 
 data_path = './data/nyu_v2/'
@@ -36,7 +38,9 @@ kitti = KITTIdataset(transform=transformKITTI)
 # dataloader = data.DataLoader(nyu, batch_size=1, shuffle=True, num_workers=6)
 dataloader = data.DataLoader(kitti, batch_size=1, shuffle=True, num_workers=6)
 
-wts = './models/temp_v3/042_model.pt'
+#wts = './models/temp_v3/042_model.pt'
+resnet_wts = './models/resnet152-b121ed2d.pth'
+resnet_152 = resnet152(pretrained=True)
 den = DEN()
 #den.load_state_dict(torch.load(wts))
 den = den.to(device)

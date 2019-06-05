@@ -4,6 +4,8 @@ from torch.nn import init
 import functools
 from torch.autograd import Variable
 import numpy as np
+from skimage import transform
+
 import sys
 sys.path.insert(0, '/home/pyun/LKVOLearner/DEN')
 
@@ -179,22 +181,22 @@ class VggDepthEstimator(nn.Module):
 
 class FDCDepthEstimator(nn.Module):
     def __init__(self, input_size=None):
-        den = den.DEN()
-        den = den.to(device)
-        den.eval()
+        den_ = den.DEN()
+        den_ = den.to(device)
+        den_.eval()
 
-        self.fdc_model = FDCInverseDepthMap(den)
+        self.fdc_model = FDCInverseDepthMap(den_)
         self.fdc_model.load_weights('./temp/path')
 
     # run run_fdc.py before train posnet.
     # TODO: foward function should return invdepth_pyramid
     def forward(self, input):
+        sizes = [(3, 128, 416), (3, 64, 208), (3, 32, 104), (3, 16, 52), (3, 8, 26)]
         invdepth_pyramid = []
-        # TODO: check num_pyramid
-        num_pyramid = 5  # temp
-        for i in range(num_pyramid):
-            # TODO: following Vgg's forward
-            invdepth_pyramid.append(self.fdc_model.getInverseDepthMap(input))
+        origin_indepth_map = self.fdc_model.getInverseDepthMap(input)
+        for i in range(5):  # num_pyrimid: 5
+            invdepth_pyramid.append(transform.resize(origin_indepth_map, sizes[i], mode='reflect',
+                                      anti_aliasing=True, preserve_range=True).astype('float32'))
         return invdepth_pyramid
 
 
