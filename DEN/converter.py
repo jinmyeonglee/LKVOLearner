@@ -1,5 +1,5 @@
 import os
-import numpy as np
+import numpy  np
 import h5py
 import pickle
 
