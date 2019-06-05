@@ -189,8 +189,8 @@ class ToTensor(object):
         # flatten the depth map
         depth = np.ravel(depth)
         
-        return {'image': from_numpy(image),
-                'depth': from_numpy(depth)}
+        return {'image': torch.from_numpy(image),
+                'depth': torch.from_numpy(depth)}
 
     
 class ScaleDown(object):
