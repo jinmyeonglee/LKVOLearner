@@ -84,8 +84,10 @@ class FDC:
         print("after eval")
         with torch.no_grad():
             for t, data in enumerate(dataloader):
-                inputs = data['stacked_images'].to(device).float()
-                labels = data['depth'].to(device).float()
+                # inputs = data['stacked_images'].to(device).float()
+                inputs = data['stacked_images'].float()
+                # labels = data['depth'].to(device).float()
+                labels = data['depth'].float()
 
                 bsz, ncrops, c, h, w = inputs.size()
                 print('input.sizes : ',bsz, ncrops, c, h, w)
