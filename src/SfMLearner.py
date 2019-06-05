@@ -124,7 +124,7 @@ class SfMKernel(nn.Module):
         rot_mat_batch = self.vo.twist2mat_batch_func(p[0,:,0:3])
         trans_batch = p[0,:,3:6]
 
-        # TODO: change here
+        # TODO: change depth_net VGG to FDCDepthEstimator
         # inv_depth_pyramid : not cropped depth
         # input frames : cropped frames
         inv_depth_pyramid = self.depth_net.forward((frames-127)/127) 
