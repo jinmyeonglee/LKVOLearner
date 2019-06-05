@@ -80,8 +80,8 @@ class KITTIdataset(data.Dataset):
             depth_list.append(depth_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])
             #print(frame_list[i].shape, depth_list[i].shape)
             
-        frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
-        #frames = np.asarray(frame_list).astype(float)
+        #frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
+        frames = np.asarray(frame_list).astype(float)
         
         #depth = np.asarray(depth_list).astype(float)
         
@@ -89,7 +89,7 @@ class KITTIdataset(data.Dataset):
 
         if self.transform:
             sample = self.transform(sample)  # : 3*128*416->3*4*128*416
-    
+        sample['stacked_images'] = sample['stacked_images'].permute(0,1,4,2,3)
         #frames : frame list, depth : depth list , camparams : cam_intrinsics
         # return sample, camparams
         return sample
