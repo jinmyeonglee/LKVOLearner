@@ -1,4 +1,5 @@
-from torch import from_numpy, stack, cat, empty
+# from torch import from_numpy, stack, cat, empty, unsqueeze
+import torch
 import numpy as np
 from skimage import transform
 from torchvision import transforms
@@ -247,12 +248,12 @@ class FDCPreprocess(object):
                                         anti_aliasing=True, preserve_range=True).astype('float32')
                 four_crop.append(crop)
 
-        stacked_images = transforms.Lambda(lambda crops: stack([transforms.ToTensor()(c) for c in crops]))(four_crop)
+        stacked_images = transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(c) for c in crops]))(four_crop)
 
         depth = transform.resize(depth, (25, 32), mode='reflect',
                                  anti_aliasing=True, preserve_range=True).astype('float32')
         depth = np.ravel(depth)
-        depth = from_numpy(depth)
+        depth = torch.from_numpy(depth)
 
         return {'stacked_images': stacked_images, 'depth': depth}
 
@@ -274,7 +275,7 @@ class FDCPreprocessKITTI(object):
 
     def __call__(self, sample):
         frames, depth = sample['frames'], sample['depth']
-        stacked_images = empty(0)
+        stacked_images = torch.empty(0)
         for img in frames:
             h, w, _ = img.shape
             four_crop = []
@@ -297,16 +298,22 @@ class FDCPreprocessKITTI(object):
 
             # in : four_crop out : stack[ToTensor(c)]
             # stacked_images : 3 * 4 (bundles * crops)
-
-            stacked_images = cat((stacked_images, transforms.Lambda(lambda crops: stack([transforms.ToTensor()(c) for c in crops]))(four_crop)), 0)
+            if stacked_images.shape == torch.Size([0]):
+                stacked_images = torch.cat((stacked_images, transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(c) for c in crops]))(four_crop)), 0)
+            else:
+                stacked_images = torch.cat((stacked_images, torch.unsqueeze(transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(c) for c in crops]))(four_crop)), 0) , 0)
+            
             print("stacked images :", stacked_images.shape)
         # depth: 3 * 1  (bundels * 1 totla depth map)
-        stacked_depth = empty(0)
+        stacked_depth = torch.empty(0)
         for i in range(len(depth)):
             depth[i] = transform.resize(depth[i], (25, 32), mode='reflect',
                                     anti_aliasing=True, preserve_range=True).astype('float32')
             depth[i] = np.ravel(depth[i])
-            depth[i] = from_numpy(depth[i])
+            depth[i] = torch.from_numpy(depth[i])
             print("depth[i] :",depth[i].shape)
-            stacked_depth = cat((stacked_depth,depth[i]),0)
+            if stacked_depth.shape == torch.Size([0]):
+                stacked_depth = torch.cat((stacked_depth,depth[i]),0)
+            else:
+                stacked_depth = torch.cat((stacked_depth, torch.unsqueeze(depth[i]), 0), 0)
         return {'stacked_images': stacked_images, 'depth': stacked_depth}
