@@ -291,7 +291,7 @@ class FDCPreprocessKITTI(object):
                     elif i == 3:  # Bottom-right
                         crop = img[-h_crop:, -w_crop:]
 
-                    crop = transform.resize(crop, (224, 224), mode='reflect',
+                    crop = transform.resize(crop, (3,224, 224), mode='reflect',
                                             anti_aliasing=True, preserve_range=True).astype('float32')
                     four_crop.append(crop)
 
