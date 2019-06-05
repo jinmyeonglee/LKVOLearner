@@ -88,7 +88,7 @@ class FDC:
                 labels = data['depth'].to(device).float()
 
                 bsz, ncrops, c, h, w = inputs.size()
-                print(bsz, ncrops, c, h, w)
+                print('input.sizes : ',bsz, ncrops, c, h, w)
                 result = self.model(inputs.view(-1, c, h, w))  # decrease dimension
                 print(result.shape)
                 candidates = self.merge_crops(result)
