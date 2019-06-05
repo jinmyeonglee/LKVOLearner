@@ -88,7 +88,7 @@ class FDC:
                 #inputs = data['stacked_images']
                 labels = data['depth'].to(device).float()
                 #labels = data['depth']
-
+                print(inputs.size())
                 bsz, ncrops, c, h, w = inputs.size()
                 print('input.sizes : ',bsz, ncrops, c, h, w)
                 result = self.model(inputs.view(3, -1, c, h, w))  # decrease dimension
