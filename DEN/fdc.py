@@ -84,14 +84,14 @@ class FDC:
         print("after eval")
         with torch.no_grad():
             for t, data in enumerate(dataloader):
-                # inputs = data['stacked_images'].to(device).float()
-                inputs = data['stacked_images'].float()
-                # labels = data['depth'].to(device).float()
-                labels = data['depth'].float()
+                inputs = data['stacked_images'].to(device).float()
+                #inputs = data['stacked_images']
+                labels = data['depth'].to(device).float()
+                #labels = data['depth']
 
                 bsz, ncrops, c, h, w = inputs.size()
                 print('input.sizes : ',bsz, ncrops, c, h, w)
-                result = self.model(inputs.view(-1, c, h, w))  # decrease dimension
+                result = self.model(inputs.view(3, -1, c, h, w))  # decrease dimension
                 print("result.shape", result.shape)
                 candidates = self.merge_crops(result)
                 print("candidates.shape", candidates.shape)
