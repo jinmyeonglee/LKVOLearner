@@ -127,7 +127,7 @@ class FDC:
                     weights[-h:, -w:] += 1
 
             merged = np.array(merged / weights)
-            print("merged.shape" ,merged.shape)
+            #print("merged.shape" ,merged.shape)
             merged = transform.resize(merged, depth_size, mode='reflect',
                                       anti_aliasing=True, preserve_range=True).astype('float32')
             merged_crops[r] = torch.from_numpy(merged)
