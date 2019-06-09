@@ -308,7 +308,7 @@ class FDCPreprocessKITTI(object):
         # depth: 3 * 1  (bundels * 1 totla depth map)
         stacked_depth = torch.empty(0)
         for i in range(len(depth)):
-            print(i,depth[i].shape)
+            #print(i,depth[i].shape)
             depth[i] = transform.resize(depth[i], (25, 32), mode='reflect',
                                     anti_aliasing=True, preserve_range=True).astype('float32')
             depth[i] = np.ravel(depth[i])
