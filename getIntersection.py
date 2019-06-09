@@ -15,7 +15,7 @@ for i in range(2):
     for s in subfolders:
         files = list(filter(lambda f: f.endswith(".jpg"), os.listdir(path[i] + s)))
         files.sort()
-        files = files[1:-1]
+        files = files[2:-2]
         for fi in files:
             sets[i].add(s + " " + fi[:-4])
 
