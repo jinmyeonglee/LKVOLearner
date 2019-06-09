@@ -13,7 +13,7 @@ sets = [data_set, gt_set]
 for i in range(2):
     subfolders = os.listdir(path[i])
     for s in subfolders:
-        files = list(filter(lambda f: f.endswith(".jpg"), os.listdir(path[i] + s)))
+        files = list(filter(lambda f: f.endswith(".jpg"), os.listdir(path[i] + s)))[1:-1]
         for fi in files:
             sets[i].add(s + " " + fi[:-4])
 
