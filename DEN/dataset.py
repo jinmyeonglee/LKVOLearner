@@ -75,9 +75,11 @@ class KITTIdataset(data.Dataset):
         frame_list = []
         depth_list = []
 
+        print(gt_file)
         for i in range(self.bundle_size):
             frame_list.append(frames_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])  #crop image by (height * 416)*3
             depth_list.append(depth_cat[:,i*self.img_size[1]:(i+1)*self.img_size[1],:])
+            print(frame_list[i].shape, depth_list[i].shape)
             #print(frame_list[i].shape, depth_list[i].shape)
             
         #frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
