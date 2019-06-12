@@ -67,14 +67,13 @@ optimizer = optim.Adam(sfmlearner.get_parameters(), lr=.0001)
 
 step_num = 0
 
-
-
 for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
     t = timer()
     for ii, data in enumerate(dataloader):
         optimizer.zero_grad()
+        print(type(data))
         frames = Variable(data[0]['stacked_images'].float().cuda())
-        depth = Variable(data[0]['depth'].cuda())
+        #depth = Variable(data[0]['depth'].cuda())
         camparams = Variable(data[1])
         cost, photometric_cost, smoothness_cost, frames, inv_depths, _ = \
             sfmlearner.forward(frames, camparams)
