@@ -140,7 +140,7 @@ class SfMKernel(nn.Module):
         ref_inv_depth_pyramid = [depth[ref_frame_idx, :, :] for depth in inv_depth_norm_pyramid]
         src_inv_depth_pyramid = [depth[src_frame_idx, :, :] for depth in inv_depth_norm_pyramid]
 
-        photometric_cost = self.vo.compute_phtometric_loss(
+        photometric_cost = self.vo.compute_photometric_loss(
                                                 ref_frame_pyramid,
                                                 src_frames_pyramid,
                                                 ref_inv_depth_pyramid,
