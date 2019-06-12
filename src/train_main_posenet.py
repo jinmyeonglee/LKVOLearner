@@ -15,8 +15,6 @@ from dataset import KITTIdataset
 import transforms_nyu
 from torchvision.transforms import Compose
 
-# from KCSdataset import KCSdataset
-
 from collections import OrderedDict
 from options.train_options import TrainOptions
 from util.visualizer import Visualizer
@@ -36,7 +34,7 @@ transformKITTI = Compose([
             transforms_nyu.FDCPreprocessKITTI(crop_ratios)
         ])
 dataset = KITTIdataset(transform=transformKITTI,img_size=img_size, bundle_size=3)
-dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=2, pin_memory=True)
+dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=0, pin_memory=True)
 
 
 # dataset = KITTIdataset(data_root_path=opt.dataroot, img_size=img_size, bundle_size=3)
@@ -75,8 +73,8 @@ for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
     t = timer()
     for ii, data in enumerate(dataloader):
         optimizer.zero_grad()
-        frames = Variable(data[0]['frames'].float().cuda())
-        #depth = Variable(data[0]['depth'].cuda())
+        frames = Variable(data[0]['stacked_images'].float().cuda())
+        depth = Variable(data[0]['depth'].cuda())
         camparams = Variable(data[1])
         cost, photometric_cost, smoothness_cost, frames, inv_depths, _ = \
             sfmlearner.forward(frames, camparams)
