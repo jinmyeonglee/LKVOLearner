@@ -36,9 +36,9 @@ class SfMLearner(nn.Module):
         self.use_ssim = use_ssim
         self.use_expl_mask = use_expl_mask
 
-    def forward(self, frames, camparams, max_lk_iter_num=10):
+    def forward(self, frames, cropped, camparams, max_lk_iter_num=10):
         cost, photometric_cost, smoothness_cost, ref_frame, ref_inv_depth, ref_expl_mask \
-            = self.sfmkernel.forward(frames, camparams, self.ref_frame_idx,
+            = self.sfmkernel.forward(frames, cropped, camparams, self.ref_frame_idx,
             self.lambda_S, self.lambda_E, use_ssim=self.use_ssim)
         return cost.mean(), photometric_cost.mean(), smoothness_cost.mean(), ref_frame, ref_inv_depth, ref_expl_mask
 
@@ -83,9 +83,9 @@ class SfMKernel(nn.Module):
         self.use_expl_mask = use_expl_mask
 
 
-    def forward(self, frames, camparams, ref_frame_idx, lambda_S=.5, lambda_E=.01, do_data_augment=True, use_ssim=True):
+    def forward(self, frames, cropped, camparams, ref_frame_idx, lambda_S=.5, lambda_E=.01, do_data_augment=True, use_ssim=True):
         print(frames.size(),frames.dim(), frames.size(0))
-        # assert(frames.size(0) == 1 and frames.dim() == 5)
+        assert(frames.size(0) == 1 and frames.dim() == 6) #torch.Size([1, 3, 36, 3, 224, 224]) 6
         frames = frames.squeeze(0)
         camparams = camparams.squeeze(0).data
 
@@ -129,7 +129,7 @@ class SfMKernel(nn.Module):
         # TODO: change depth_net VGG to FDCDepthEstimator
         # inv_depth_pyramid : not cropped depth
         # input frames : cropped frames
-        inv_depth_pyramid = self.depth_net.forward((frames-127)/127)
+        inv_depth_pyramid = self.depth_net.forward((cropped-127)/127)
         inv_depth_mean_ten = inv_depth_pyramid[0].mean()*0.1 #uncommment this to use normalization
 
         # normalize

@@ -33,7 +33,7 @@ transformKITTI = Compose([
             transforms_nyu.NormalizeKITTI(),
             transforms_nyu.FDCPreprocessKITTI(crop_ratios)
         ])
-dataset = KITTIdataset(transform=transformKITTI,img_size=img_size, bundle_size=3)
+dataset = KITTIdataset(transform=transformKITTI,img_size=img_size, bundle_size=3, idDen=False)
 dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=0, pin_memory=True)
 
 
@@ -72,11 +72,12 @@ for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
     for ii, data in enumerate(dataloader):
         optimizer.zero_grad()
         print(type(data))
-        frames = Variable(data[0]['stacked_images'].float().cuda())
+        frames = Variable(data[0]['frames'].float().cuda())
+        cropped = Variable(data[0]['stacked_images'].float().cuda())
         #depth = Variable(data[0]['depth'].cuda())
         camparams = Variable(data[1])
         cost, photometric_cost, smoothness_cost, frames, inv_depths, _ = \
-            sfmlearner.forward(frames, camparams)
+            sfmlearner.forward(frames,cropped, camparams)
         # print(frames.size())
         # print(inv_depths.size())
         cost_ = cost.data.cpu()

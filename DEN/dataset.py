@@ -31,13 +31,14 @@ class NyuV2(data.Dataset):
 
 class KITTIdataset(data.Dataset):
     """KITTIdataset"""
-    def __init__(self, list_file='train.txt', data_root_path='/data/raw_data_prepared', img_size=[128, 416], bundle_size=3, transform=None):
+    def __init__(self, list_file='train.txt', data_root_path='/data/raw_data_prepared', img_size=[128, 416], bundle_size=3, transform=None, isDen=True):
         self.gt_root_path='/data/gt_data_prepared'
         self.data_root_path = data_root_path
         self.img_size = img_size
         self.bundle_size = bundle_size
         self.frame_pathes = []
         self.transform = transform
+        self.isDen = isDen
         list_file = os.path.join(data_root_path, list_file)
         with open(list_file) as file:
             for line in file:
@@ -90,7 +91,11 @@ class KITTIdataset(data.Dataset):
         sample = {'frames': frames, 'depth':depth_list}
 
         if self.transform:
-            sample = self.transform(sample)  # : 3*128*416->3*4*128*416
-        #frames : frame list, depth : depth list , camparams : cam_intrinsics
-        return sample, camparams
-        #return sample
+            DENsample = self.transform(sample)  # : 3*128*416->3*4*128*416
+  
+        
+        if self.isDen:
+            return DENsample
+        else:
+            lkvosample = {'frames': sample['frames'], 'stacked_images': DENsample['stacked_images']}
+            return lkvosample
