@@ -71,12 +71,11 @@ class Conv(nn.Module):
 class FDCInverseDepthMap(fdc.FDC):
     def getInverseDepthMap(self, batch):
         predictions = fdc.FDC.__call__(self, batch)
-        inversed = []
         for i in range(len(predictions)):
             for j in range(predictions[i].shape[0]):
                 predictions[i][j] = torch.tensor(list(map(lambda x: 0 if 1 / x == float('inf') else 1 / x, predictions[i][j])))
         
-        return inversed
+        return predictions
 
 
 class VggDepthEstimator(nn.Module):
