@@ -19,7 +19,7 @@ class BaseOptions():
         self.parser.add_argument('--name', type=str, default='experiment_name', help='name of the experiment. It decides where to store samples and models')
 
         self.parser.add_argument('--nThreads', default=2, type=int, help='# threads for loading data')
-        self.parser.add_argument('--checkpoints_dir', type=str, default='./checkpoints', help='models are saved here')
+        self.parser.add_argument('--checkpoints_dir', type=str, default='/data/log/checkpoints', help='models are saved here')
 
         self.parser.add_argument('--display_winsize', type=int, default=256,  help='display window size')
         self.parser.add_argument('--display_id', type=int, default=1, help='window id of the web display')
