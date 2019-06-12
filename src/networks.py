@@ -181,6 +181,7 @@ class VggDepthEstimator(nn.Module):
 
 class FDCDepthEstimator(nn.Module):
     def __init__(self, input_size=None):
+        super(FDCDepthEstimator, self).__init__()
         den_ = den.DEN()
         den_ = den_.to(device)
         den_.eval()
