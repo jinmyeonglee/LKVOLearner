@@ -73,7 +73,7 @@ class SfMKernel(nn.Module):
         self.vo = DirectVO(imH=img_size[0], imW=img_size[1], pyramid_layer_num=4)
         # TODO: Vgg -> FDEDpthEstimator
         # self.depth_net = VggDepthEstimator(img_size)
-        self.depth_net = FDCDepthEstimator(img_size)
+        self.depth_net = FDCDepthEstimator(img_size).cuda()
         if use_expl_mask:
             self.pose_net = PoseExpNet(3)
         else:
