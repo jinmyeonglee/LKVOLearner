@@ -26,7 +26,7 @@ class FDC:
             with torch.no_grad():
                 result = self.model(batch[i])
             candidates = self.merge_crops(result)
-             f_m_hat = self.img2fourier(candidates)
+            f_m_hat = self.img2fourier(candidates)
             f_hat = self.predict(f_m_hat)
             d_hat = self.fourier2img(f_hat.view(1, -1), depth_size)
             predictions.append(d_hat[0])
