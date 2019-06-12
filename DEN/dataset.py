@@ -98,4 +98,4 @@ class KITTIdataset(data.Dataset):
             return DENsample
         else:
             lkvosample = {'frames': sample['frames'], 'stacked_images': DENsample['stacked_images']}
-            return lkvosample
+            return lkvosample, camparams
