@@ -201,6 +201,9 @@ class FDCDepthEstimator(nn.Module):
                                       anti_aliasing=True, preserve_range=True).astype('float32'))
         return invdepth_pyramid
 
+    def init_weights(self):
+        # already loaded in intializing.
+        pass
 
 class PoseNet(nn.Module):
     def __init__(self, bundle_size):
