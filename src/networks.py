@@ -186,7 +186,7 @@ class FDCDepthEstimator(nn.Module):
         den_.eval()
 
         self.fdc_model = FDCInverseDepthMap(den_)
-        self.fdc_model.load_weights('./temp/path')
+        self.fdc_model.load_weights('/home/pyun/LKVOLearner/DEN/models/FDC/den_dbe/')
 
     # run run_fdc.py before train posnet.
     # TODO: foward function should return invdepth_pyramid
