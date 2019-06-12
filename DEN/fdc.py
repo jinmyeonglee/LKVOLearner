@@ -22,13 +22,11 @@ class FDC:
         
     def __call__(self, batch):
         predictions = []
-        print('fdc batch shape : ',batch.shape)
         for i in range(batch.shape[0]):
             with torch.no_grad():
                 result = self.model(batch[i])
             candidates = self.merge_crops(result)
-            print(i,'th candidates shape : ',candidates.shape)
-            f_m_hat = self.img2fourier(candidates)
+             f_m_hat = self.img2fourier(candidates)
             f_hat = self.predict(f_m_hat)
             d_hat = self.fourier2img(f_hat.view(1, -1), depth_size)
             predictions.append(d_hat[0])

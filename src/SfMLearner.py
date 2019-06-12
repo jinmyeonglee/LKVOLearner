@@ -84,7 +84,6 @@ class SfMKernel(nn.Module):
 
 
     def forward(self, frames, cropped, camparams, ref_frame_idx, lambda_S=.5, lambda_E=.01, do_data_augment=True, use_ssim=True):
-        print(frames.size(),frames.dim(), frames.size(0))
         assert(frames.size(0) == 1 and frames.dim() == 5) #torch.Size([1, 3, 36, 3, 224, 224]) 6
         frames = frames.squeeze(0)
         cropped = cropped.squeeze(0)
@@ -99,8 +98,8 @@ class SfMKernel(nn.Module):
         bundle_size = frames.size(0)
         src_frame_idx = tuple(range(0,ref_frame_idx)) + tuple(range(ref_frame_idx+1,bundle_size))
         frames_pyramid = self.vo.pyramid_func(frames)#not cropped frame
-        for frame in frames_pyramid :
-            print(frame.shape)
+        # for frame in frames_pyramid :
+        #     print(frame.shape)
         ref_frame_pyramid = [frame[ref_frame_idx, :, :, :] for frame in frames_pyramid]
         src_frames_pyramid = [frame[src_frame_idx, :, :, :] for frame in frames_pyramid]
 

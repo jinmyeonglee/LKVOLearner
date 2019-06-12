@@ -202,7 +202,6 @@ class FDCDepthEstimator(nn.Module):
                                                             anti_aliasing=True, preserve_range=True).astype('float32'))
             invdepth_pyramid[i] = torch.tensor(invdepth_pyramid[i]).cuda()
             invdepth_pyramid[i] = invdepth_pyramid[i]*DISP_SCALING+MIN_DISP
-            print(i,": ", invdepth_pyramid[i].shape)
         return invdepth_pyramid
 
     def init_weights(self):
