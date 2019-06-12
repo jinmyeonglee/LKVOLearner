@@ -195,7 +195,7 @@ class FDCDepthEstimator(nn.Module):
 
         origin_indepth_map = self.fdc_model.getInverseDepthMap(input)
         for i in range(5):  # num_pyrimid: 5
-            invdepth_pyramid.append(transform.resize(origin_indepth_map, sizes[i], mode='reflect',
+            invdepth_pyramid.append(transform.resize(origin_indepth_map[i], sizes[i], mode='reflect',
                                       anti_aliasing=True, preserve_range=True).astype('float32'))
         return invdepth_pyramid
 
