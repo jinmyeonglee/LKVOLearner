@@ -189,8 +189,6 @@ class FDCDepthEstimator(nn.Module):
         self.fdc_model = FDCInverseDepthMap(den_)
         self.fdc_model.load_weights('/home/pyun/LKVOLearner/DEN/models/FDC/den_dbe/')
 
-    # run run_fdc.py before train posnet.
-    # TODO: foward function should return invdepth_pyramid
     def forward(self, input):
         sizes = [(3, 128, 416), (3, 64, 208), (3, 32, 104), (3, 16, 52), (3, 8, 26)]
         invdepth_pyramid = []

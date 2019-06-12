@@ -91,12 +91,12 @@ class KITTIdataset(data.Dataset):
         sample = {'frames': frames, 'depth':depth_list}
 
         if self.transform:
-            DENsample = self.transform(sample)  # : 3*128*416->3*4*128*416
+            sample = self.transform(sample)  # : 3*128*416->3*4*128*416
   
         
         if self.isDen:
-            return DENsample
+            return sample
         else:
             frames = np.asarray(frame_list).astype(float).transpose(0, 3, 1, 2)
-            lkvosample = {'frames': frames, 'stacked_images': DENsample['stacked_images']}
+            lkvosample = {'frames': frames, 'stacked_images': sample['stacked_images']}
             return lkvosample, camparams

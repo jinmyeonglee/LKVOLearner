@@ -87,7 +87,7 @@ class SfMKernel(nn.Module):
         print(frames.size(),frames.dim(), frames.size(0))
         assert(frames.size(0) == 1 and frames.dim() == 5) #torch.Size([1, 3, 36, 3, 224, 224]) 6
         frames = frames.squeeze(0)
-        cropped = frames.squeeze(0)
+        cropped = cropped.squeeze(0)
         camparams = camparams.squeeze(0).data
 
 

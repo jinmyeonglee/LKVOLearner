@@ -22,7 +22,7 @@ class FDC:
         
     def __call__(self, batch):
         predictions = []
-        print(batch.shape)
+        print('fdc batch shape : ',batch.shape)
         for i in range(batch.shape[0]):
             with torch.no_grad():
                 result = self.model(batch[i])
