@@ -33,7 +33,7 @@ transformKITTI = Compose([
             transforms_nyu.NormalizeKITTI(),
             transforms_nyu.FDCPreprocessKITTI(crop_ratios)
         ])
-dataset = KITTIdataset(transform=transformKITTI,img_size=img_size, bundle_size=3, idDen=False)
+dataset = KITTIdataset(transform=transformKITTI,img_size=img_size, bundle_size=3, isDen=False)
 dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=0, pin_memory=True)
 
 
