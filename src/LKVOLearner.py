@@ -22,7 +22,7 @@ class FlipLR(nn.Module):
 
 
 class LKVOLearner(nn.Module):
-    def __init__(self, img_size=[128, 416], ref_frame_idx=1, lambda_S=.5, use_ssim=True, smooth_term = 'lap', gpu_ids=[0]):
+    def __init__(self, img_size=[128, 416], ref_frame_idx=1, lambda_S=.5, use_ssim=True, smooth_term = 'lap', gpu_ids=[4]):
         super(LKVOLearner, self).__init__()
         self.lkvo = nn.DataParallel(LKVOKernel(img_size, smooth_term = smooth_term), device_ids=gpu_ids)
         self.ref_frame_idx = ref_frame_idx

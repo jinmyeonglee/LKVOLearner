@@ -27,8 +27,8 @@ dataset = KITTIdataset(data_root_path=opt.dataroot, img_size=img_size, bundle_si
 dataloader = DataLoader(dataset, batch_size=opt.batchSize,
                         shuffle=True, num_workers=opt.nThreads, pin_memory=True)
 
-gpu_ids = list(range(opt.batchSize))
-
+#gpu_ids = list(range(opt.batchSize))
+gpu_ids = [4]
 
 lkvolearner = LKVOLearner(img_size=img_size, ref_frame_idx=1, lambda_S=opt.lambda_S, gpu_ids = gpu_ids,
                 smooth_term = opt.smooth_term, use_ssim=opt.use_ssim)
