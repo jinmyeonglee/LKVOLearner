@@ -97,5 +97,6 @@ class KITTIdataset(data.Dataset):
         if self.isDen:
             return DENsample
         else:
+            frames = frames = np.asarray(sample['frames']).astype(float).transpose(0, 3, 1, 2)
             lkvosample = {'frames': sample['frames'], 'stacked_images': DENsample['stacked_images']}
             return lkvosample, camparams
