@@ -85,8 +85,9 @@ class SfMKernel(nn.Module):
 
     def forward(self, frames, cropped, camparams, ref_frame_idx, lambda_S=.5, lambda_E=.01, do_data_augment=True, use_ssim=True):
         print(frames.size(),frames.dim(), frames.size(0))
-        assert(frames.size(0) == 1 and frames.dim() == 6) #torch.Size([1, 3, 36, 3, 224, 224]) 6
+        assert(frames.size(0) == 1 and frames.dim() == 5) #torch.Size([1, 3, 36, 3, 224, 224]) 6
         frames = frames.squeeze(0)
+        cropped = frames.squeeze(0)
         camparams = camparams.squeeze(0).data
 
 
