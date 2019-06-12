@@ -199,9 +199,10 @@ class FDCDepthEstimator(nn.Module):
         for i in range(len(sizes)):  # num_pyrimid: 5
             for j in range(len(origin_indepth_map)):
                 invdepth_pyramid[i].append(transform.resize(origin_indepth_map[j].numpy(), sizes[i], mode='reflect', 
-                                                            anti_aliasing=True, preserve_range=True).astype('float32'))
+                                                            anti_aliasing=True, preserve_range=True).astype('double'))
             invdepth_pyramid[i] = torch.tensor(invdepth_pyramid[i]).double()
             invdepth_pyramid[i] = invdepth_pyramid[i]*DISP_SCALING+MIN_DISP
+            print(i,": ", invdepth_pyramid[i].shape)
         return invdepth_pyramid
 
     def init_weights(self):
