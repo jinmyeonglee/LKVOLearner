@@ -86,9 +86,9 @@ class FDC:
                 
                 #inputs = data['stacked_images'].to(device).float()
                 #labels = data['depth'].to(device).float()
-                inputs = data[0]['stacked_images'].to(device).float()
+                inputs = data['stacked_images'].to(device).float()
                 inputs = torch.squeeze(inputs, 0)
-                labels = data[0]['depth'].to(device).float()
+                labels = data['depth'].to(device).float()
                 labels = torch.squeeze(labels, 0)
 
                 nframes, ncrops, c, h, w = inputs.size()
