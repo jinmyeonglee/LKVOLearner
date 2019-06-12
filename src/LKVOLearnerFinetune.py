@@ -1,5 +1,5 @@
 from DirectVOLayer import DirectVO
-from networks import VggDepthEstimator, PoseNet
+from networks import VggDepthEstimator, PoseNet, FDCDepthEstimator
 
 
 from ImagePyramid import ImagePyramidLayer
@@ -63,7 +63,8 @@ class LKVOKernel(nn.Module):
         self.fliplr_func = FlipLR(imW=img_size[1], dim_w=3)
         self.vo = DirectVO(imH=img_size[0], imW=img_size[1], pyramid_layer_num=4)
         self.pose_net = PoseNet(3)
-        self.depth_net = VggDepthEstimator(img_size)
+        #self.depth_net = VggDepthEstimator(img_size)
+        self.depth_net = FDCDepthEstimator(img_size)
         self.pyramid_func = ImagePyramidLayer(chan=1, pyramid_layer_num=4)
         self.smooth_term = smooth_term
 

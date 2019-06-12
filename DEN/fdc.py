@@ -84,19 +84,18 @@ class FDC:
         print("after eval")
         with torch.no_grad():
             for t, data in enumerate(dataloader):
-                inputs = data['stacked_images'].to(device).float()
+                
+                #inputs = data['stacked_images'].to(device).float()
+                #labels = data['depth'].to(device).float()
+                inputs = data[0]['stacked_images'].to(device).float()
                 inputs = torch.squeeze(inputs, 0)
-                #inputs = data['stacked_images']
-                labels = data['depth'].to(device).float()
+                labels = data[0]['depth'].to(device).float()
                 labels = torch.squeeze(labels, 0)
-                #labels = data['depth']
-                #print(inputs.size())
+
                 nframes, ncrops, c, h, w = inputs.size()
-                #print('input.sizes : ',nframes, ncrops, c, h, w)
                 result = self.model(inputs[1].view(-1, c, h, w))  # decrease dimension
-                #print("result.shape", result.shape)
+
                 candidates = self.merge_crops(result)
-                #print("candidates.shape", candidates.shape)
                 f_m_hat[t] = self.img2fourier(candidates)
                 f[t] = self.img2fourier(labels[1].view(1, depth_size[0], depth_size[1]))
 
@@ -127,7 +126,6 @@ class FDC:
                     weights[-h:, -w:] += 1
 
             merged = np.array(merged / weights)
-            #print("merged.shape" ,merged.shape)
             merged = transform.resize(merged, depth_size, mode='reflect',
                                       anti_aliasing=True, preserve_range=True).astype('float32')
             merged_crops[r] = torch.from_numpy(merged)
