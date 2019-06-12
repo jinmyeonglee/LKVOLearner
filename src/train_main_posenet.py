@@ -100,9 +100,9 @@ for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
             print(inv_depths_mean)
             t = timer()
             visualizer.plot_current_errors(step_num, 1, opt,
-                        OrderedDict([('photometric_cost', photometric_cost.data.cpu().item(0)),
-                         ('smoothness_cost', smoothness_cost.data.cpu().item(0)),
-                         ('cost', cost.data.cpu().item(0))]))
+                        OrderedDict([('photometric_cost', photometric_cost.data.cpu().item()),
+                         ('smoothness_cost', smoothness_cost.data.cpu().item()),
+                         ('cost', cost.data.cpu().item())]))
 
         if np.mod(step_num, opt.display_freq)==0:
             # frame_vis = frames.data[:,1,:,:,:].permute(0,2,3,1).contiguous().view(-1,opt.imW, 3).cpu().numpy().astype(np.uint8)
