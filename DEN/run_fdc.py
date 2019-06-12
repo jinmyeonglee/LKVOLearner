@@ -15,6 +15,7 @@ data_path = '/data/nyu_v2/'
 seed = 2
 torch.manual_seed(seed)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+torch.cuda.set_device(4)
 print(device)
 
 depth_size = (25, 32)
