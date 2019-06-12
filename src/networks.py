@@ -190,14 +190,18 @@ class FDCDepthEstimator(nn.Module):
         self.fdc_model.load_weights('/home/pyun/LKVOLearner/DEN/models/FDC/den_dbe/')
 
     def forward(self, input):
-        sizes = [(3, 128, 416), (3, 64, 208), (3, 32, 104), (3, 16, 52), (3, 8, 26)]
-        invdepth_pyramid = []
+        sizes = [(128, 416), (64, 208), (32, 104), (16, 52), (8, 26)]
+        invdepth_pyramid = [[] for _ in range(len(sizes))]
 
         origin_indepth_map = self.fdc_model.getInverseDepthMap(input)
+
+
         for i in range(len(sizes)):  # num_pyrimid: 5
-            print(i, ":", origin_indepth_map[i].shape)
-            invdepth_pyramid.append(transform.resize(origin_indepth_map[i], sizes[i], mode='reflect',
-                                      anti_aliasing=True, preserve_range=True).astype('float32'))
+            for j in range(len(origin_indepth_map)):
+                invdepth_pyramid[i].append(transform.resize(origin_indepth_map[j], sizes[i], mode='reflect', 
+                                                            anti_aliasing=True, preserve_range=True).astype('float32'))
+            invdepth_pyramid[i] = torch.tensor(invdepth_pyramid[i])
+            invdepth_pyramid[i] = invdepth_pyramid[i]*DISP_SCALING+MIN_DISP
         return invdepth_pyramid
 
     def init_weights(self):
