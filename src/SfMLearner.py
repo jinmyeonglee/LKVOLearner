@@ -52,7 +52,7 @@ class SfMLearner(nn.Module):
     def load_model(self, file_path):
         self.sfmkernel.module.depth_net.load_state_dict(torch.load(file_path+'_depth_net.pth'))
         self.sfmkernel.module.pose_net.load_state_dict(torch.load(file_path+'_pose_net.pth'))
-
+    
     def init_weights(self):
         self.sfmkernel.module.depth_net.init_weights()
 
@@ -84,7 +84,8 @@ class SfMKernel(nn.Module):
 
 
     def forward(self, frames, camparams, ref_frame_idx, lambda_S=.5, lambda_E=.01, do_data_augment=True, use_ssim=True):
-        assert(frames.size(0) == 1 and frames.dim() == 5)
+        print(frames.size(),frames.dim(), frames.size(0))
+        # assert(frames.size(0) == 1 and frames.dim() == 5)
         frames = frames.squeeze(0)
         camparams = camparams.squeeze(0).data
 
