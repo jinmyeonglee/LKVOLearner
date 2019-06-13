@@ -26,7 +26,7 @@ class FlipLR(nn.Module):
 class SfMLearner(nn.Module):
     def __init__(self, img_size=[128, 416], ref_frame_idx=1,
         lambda_S=.5, lambda_E=0.01, use_ssim=True, smooth_term = 'lap',
-        use_expl_mask=False, gpu_ids=0]):
+        use_expl_mask=False, gpu_ids=[0]):
         super(SfMLearner, self).__init__()
         print(gpu_ids)
         self.sfmkernel = nn.DataParallel(SfMKernel(img_size, smooth_term = smooth_term, use_expl_mask=use_expl_mask),
