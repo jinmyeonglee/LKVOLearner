@@ -43,7 +43,7 @@ dataloader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=0, pin_
 #                         shuffle=True, num_workers=opt.nThreads, pin_memory=True)
 
 #gpu_ids = list(range(opt.batchSize))
-gpu_ids = [4]
+gpu_ids = [0]
 
 sfmlearner = SfMLearner(img_size=img_size, ref_frame_idx=1, lambda_S=opt.lambda_S, gpu_ids = gpu_ids, smooth_term = opt.smooth_term, use_ssim=opt.use_ssim)
 sfmlearner.init_weights()
