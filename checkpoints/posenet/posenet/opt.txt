@@ -9,7 +9,7 @@ display_port: 8009
 display_single_pane_ncols: 0
 display_winsize: 256
 epoch_num: 20
-gpu_ids: [4]
+gpu_ids: [0]
 imH: 128
 imW: 416
 isTrain: True
