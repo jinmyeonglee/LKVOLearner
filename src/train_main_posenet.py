@@ -25,6 +25,9 @@ from timeit import default_timer as timer
 opt = TrainOptions().parse()
 img_size = [opt.imH, opt.imW]
 
+# for logging
+log_f = open('log_0614.txt', mode='wt', encoding='utf-8')
+
 visualizer = Visualizer(opt)
 
 crop_ratios = [0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]
@@ -102,6 +105,8 @@ for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
                         OrderedDict([('photometric_cost', photometric_cost.data.cpu().item()),
                          ('smoothness_cost', smoothness_cost.data.cpu().item()),
                          ('cost', cost.data.cpu().item())]))
+            log_f.write(str(step_num) + "\n")
+            log_f.write('photometric_cost: ' + str(photometric_cost.data.cpu().item()) + '\nsmoothness_cost: ' + str(smoothness_cost.data.cpu().item()) +  '\ncost: ' + str(cost.data.cpu().item()) + "\n")
             print('photometric_cost: ', photometric_cost.data.cpu().item(), '\nsmoothness_cost: ', smoothness_cost.data.cpu().item(), '\ncost: ', cost.data.cpu().item())
 
         if np.mod(step_num, opt.display_freq)==0:
@@ -122,3 +127,5 @@ for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
             sfmlearner.save_model(os.path.join(opt.checkpoints_dir, '%s' % (epoch)))
             sfmlearner.cuda()
             print('..... saved')
+
+log_f.close()
