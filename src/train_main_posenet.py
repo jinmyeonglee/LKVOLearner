@@ -107,6 +107,7 @@ for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
                          ('cost', cost.data.cpu().item())]))
             log_f.write(str(step_num) + "\n")
             log_f.write('photometric_cost: ' + str(photometric_cost.data.cpu().item()) + '\nsmoothness_cost: ' + str(smoothness_cost.data.cpu().item()) +  '\ncost: ' + str(cost.data.cpu().item()) + "\n")
+            log_f.flush()
             print('photometric_cost: ', photometric_cost.data.cpu().item(), '\nsmoothness_cost: ', smoothness_cost.data.cpu().item(), '\ncost: ', cost.data.cpu().item())
 
         if np.mod(step_num, opt.display_freq)==0:
