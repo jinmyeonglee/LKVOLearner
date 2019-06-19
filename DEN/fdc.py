@@ -6,7 +6,7 @@ import os
 from skimage import transform
 
 
-depth_size = (25, 32)
+depth_size = (128, 416)
 ncoeff = depth_size[0] * (math.floor(depth_size[1] / 2) + 1) * 2 # Conjugate symmetry
 crop_ratios = [0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

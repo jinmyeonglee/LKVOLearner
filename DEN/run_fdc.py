@@ -18,7 +18,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.cuda.set_device(4)
 print(device)
 
-depth_size = (25, 32)
+depth_size = (128, 416)
 model_input = 224
 test_crop = (427, 561)
 crop_ratios = [0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]

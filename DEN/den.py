@@ -50,7 +50,7 @@ class DEN(nn.Module):
         
     def _init_resnet(self, resnet, backbone_wts):
         num_ftrs = resnet.fc.in_features
-        resnet.fc = nn.Linear(num_ftrs, 25 * 32)
+        resnet.fc = nn.Linear(num_ftrs, 128 * 416)
         resnet.load_state_dict(torch.load(backbone_wts))
 
         return resnet
@@ -80,7 +80,7 @@ class DEN(nn.Module):
         self.resnet_top = nn.Sequential(*flattened[:35])
         self.resnet_mid = nn.ModuleList(flattened[35:54])
         self.avg_pool2d = flattened[54]
-        self.fc = nn.Linear(25280, 25 * 32)
+        self.fc = nn.Linear(25280, 128 * 416)
      
     
     def forward(self, input):

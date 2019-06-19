@@ -2,7 +2,7 @@ MODEL_ID=9
 PWD=$(pwd)
 mkdir $PWD/checkpoints/
 EXPNAME=finetune
-CHECKPOINT_DIR=$PWD/checkpoints/$EXPNAME
+CHECKPOINT_DIR=/data/log/checkpoints/$EXPNAME
 mkdir $CHECKPOINT_DIR
 # copy learnt model from PoseNet
 POSENET_CKPT_DIR=$PWD/checkpoints/posenet

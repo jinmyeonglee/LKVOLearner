@@ -204,7 +204,7 @@ class ScaleDown(object):
         image = transform.resize(image, target_image_shape, mode='reflect', anti_aliasing=True)
         
         # rescale and flatten the depth map
-        target_depth_shape = (25, 32)
+        target_depth_shape = (128, 416)
         depth = transform.resize(depth, target_depth_shape, mode='reflect', anti_aliasing=True)
         
         return {'image': image, 'depth': depth}    
@@ -249,7 +249,7 @@ class FDCPreprocess(object):
                 four_crop.append(crop)
 
         stacked_images = transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(c) for c in crops]))(four_crop)
-
+        # TODO: resize to different sizes.
         depth = transform.resize(depth, (25, 32), mode='reflect',
                                  anti_aliasing=True, preserve_range=True).astype('float32')
         depth = np.ravel(depth)
@@ -309,7 +309,9 @@ class FDCPreprocessKITTI(object):
         stacked_depth = torch.empty(0)
         for i in range(len(depth)):
             #print(i,depth[i].shape)
-            depth[i] = transform.resize(depth[i], (25, 32), mode='reflect',
+
+            #TODO : reszie to different size.
+            depth[i] = transform.resize(depth[i], (128, 416), mode='reflect',
                                     anti_aliasing=True, preserve_range=True).astype('float32')
             depth[i] = np.ravel(depth[i])
             depth[i] = torch.from_numpy(depth[i])
