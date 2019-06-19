@@ -142,3 +142,4 @@ dmypy.json
 
 # Append
 *.mat
+*.pth
