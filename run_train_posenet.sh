@@ -1,5 +1,5 @@
 PWD=$(pwd)
-mkdir $PWD/checkpoints/
+# mkdir $PWD/checkpoints/
 EXPNAME=posenet
 CHECKPOINT_DIR=/data/log/checkpoints/$EXPNAME
 mkdir $CHECKPOINT_DIR
