@@ -74,6 +74,8 @@ class kitti_gt_loader(object):
         if not self.is_valid_sample(self.train_frames, tgt_idx):
             return False
         example = self.load_example(self.train_frames, tgt_idx)
+        if example is None:
+            raise Exception
         return example
 
     def load_image_sequence(self, frames, tgt_idx, seq_length):
