@@ -1,8 +1,8 @@
 import os
 import numpy as np
 
-dataset_path = '/data/raw_data_prepared/'
-gtdata_path = '/data/gt_data_prepared/'
+dataset_path = '/data/prepared_annotated_kitti/'
+gtdata_path = '/data/prepared_raw_kitti/'
 path = [dataset_path, gtdata_path]
 
 data_set = set()
@@ -13,7 +13,7 @@ sets = [data_set, gt_set]
 for i in range(2):
     subfolders = os.listdir(path[i])
     for s in subfolders:
-        files = list(filter(lambda f: f.endswith(".jpg"), os.listdir(path[i] + s)))
+        files = list(filter(lambda f: f.endswith(".jpg"), os.listdir(path[i] + s)))[1:-1]
         for fi in files:
             sets[i].add(s + " " + fi[:-4])
 
@@ -23,9 +23,9 @@ with open(path[i]+ 'train.txt', 'w') as tf:
     with open(path[i] + 'val.txt', 'w') as vf:
         for item in list(intersect):
             if np.random.random() < 0.1:
-                vf.write(item)
+                vf.write(item+"\n")
             else:
-                tf.write(item)
+                tf.write(item+"\n")
 
 
 

@@ -30,6 +30,9 @@ def dump_example(n, args):
     example = data_loader.get_train_example_with_idx(n)
     if example == False:
         return
+    if example['image_seq'] is None:
+        print(example['file_name'])
+        raise Exception
     image_seq = concat_image_seq(example['image_seq'])
     dump_dir = os.path.join(args.dump_root, example['folder_name'])
     # if not os.path.isdir(dump_dir):
@@ -43,8 +46,9 @@ def dump_example(n, args):
     try:
         scipy.misc.imsave(dump_img_file, image_seq.astype(np.uint8))
         print(dump_img_file, "saved!")
-    except:
+    except Exception as E:
         print("There is no", dump_img_file)
+        print(E)
 
 def main():
     if not os.path.exists(args.dump_root):

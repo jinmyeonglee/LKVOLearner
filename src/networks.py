@@ -7,7 +7,7 @@ import numpy as np
 from skimage import transform
 
 import sys
-sys.path.insert(0, '/home/pyun/LKVOLearner/DEN')
+sys.path.insert(0, '/root/LKVOLearner/DEN')
 
 import modeling
 import fdc
@@ -187,7 +187,7 @@ class FDCDepthEstimator(nn.Module):
         den_.eval()
 
         self.fdc_model = FDCInverseDepthMap(den_)
-        self.fdc_model.load_weights('/home/pyun/LKVOLearner/DEN/models/FDC/den_dbe/')
+        self.fdc_model.load_weights('/root/LKVOLearner/DEN/models/FDC/den_dbe/')
 
     def forward(self, input):
         sizes = [(128, 416), (64, 208), (32, 104), (16, 52), (8, 26)]

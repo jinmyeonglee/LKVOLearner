@@ -31,8 +31,8 @@ class NyuV2(data.Dataset):
 
 class KITTIdataset(data.Dataset):
     """KITTIdataset"""
-    def __init__(self, list_file='train.txt', data_root_path='/data/raw_data_prepared', img_size=[128, 416], bundle_size=3, transform=None, isDen=True):
-        self.gt_root_path='/data/gt_data_prepared'
+    def __init__(self, list_file='train.txt', data_root_path='/data/prepared_raw_kitti', img_size=[128, 416], bundle_size=3, transform=None, isDen=True):
+        self.gt_root_path='/data/prepared_annotated_kitti'
         self.data_root_path = data_root_path
         self.img_size = img_size
         self.bundle_size = bundle_size
@@ -44,7 +44,6 @@ class KITTIdataset(data.Dataset):
             for line in file:
                 frame_path = line.strip()
                 seq_path, frame_name = frame_path.split(" ")
-                # print(seq_path)
                 if seq_path in ['2011_09_26_drive_0119_sync_02', '2011_09_28_drive_0225_sync_02',
                                 '2011_09_29_drive_0108_sync_02', '2011_09_30_drive_0072_sync_02',
                                 '2011_10_03_drive_0058_sync_02', '2011_09_29_drive_0108_sync_03']:
