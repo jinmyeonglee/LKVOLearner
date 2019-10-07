@@ -11,7 +11,7 @@ import sys
 sys.path.insert(0, '/home/pyun/LKVOLearner/DEN')
 from SfMLearner import SfMLearner
 #from KITTIdataset import KITTIdataset
-from dataset import KITTIdataset
+from dataset import KITTIdatasetw
 import transforms_nyu
 from torchvision.transforms import Compose
 
@@ -62,16 +62,15 @@ ref_frame_idx = 1
 
 
 def vis_depthmap(input):
-    x = (input-input.min()) * (255/(input.max()-input.min()+.00001))
+    # x = (input-input.min()) * (255/(input.max()-input.min()+.00001))
     return x.unsqueeze(2).repeat(1, 1, 3)
 
 
 optimizer = optim.Adam(sfmlearner.get_parameters(), lr=.0001)
 
-step_num = 0
-
 for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
     t = timer()
+    step_num = 0
     for ii, data in enumerate(dataloader):
         optimizer.zero_grad()
         frames = Variable(data[0]['frames'].float().cuda())

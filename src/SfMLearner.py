@@ -72,7 +72,6 @@ class SfMKernel(nn.Module):
         self.img_size = img_size
         self.fliplr_func = FlipLR(imW=img_size[1], dim_w=3)
         self.vo = DirectVO(imH=img_size[0], imW=img_size[1], pyramid_layer_num=4)
-        # TODO: Vgg -> FDEDpthEstimator
         # self.depth_net = VggDepthEstimator(img_size)
         self.depth_net = FDCDepthEstimator(img_size).cuda()
         if use_expl_mask:
@@ -131,7 +130,7 @@ class SfMKernel(nn.Module):
         # inv_depth_pyramid : not cropped depth
         # input frames : cropped frames
         inv_depth_pyramid = self.depth_net.forward((cropped-127)/127)
-        inv_depth_mean_ten = inv_depth_pyramid[0].mean()*0.1 #uncommment this to use normalization
+        # inv_depth_mean_ten = inv_depth_pyramid[0].mean()*0.1 #uncommment this to use normalization
 
         # normalize
         #trans_batch = trans_batch*inv_depth_mean_ten
