@@ -7,7 +7,7 @@ import os
 
 class KITTIdataset(Dataset):
     """KITTIdataset"""
-    def __init__(self, list_file='train.txt', data_root_path='/home/chaoyang/LKVOLearner/data_kitti', img_size=[128, 416], bundle_size=3):
+    def __init__(self, list_file='train.txt', data_root_path='/data/prepared_raw_kitti/', img_size=[128, 416], bundle_size=3):
         self.data_root_path = data_root_path
         self.img_size = img_size
         self.bundle_size = bundle_size
