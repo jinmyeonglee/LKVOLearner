@@ -15,7 +15,7 @@ class BaseOptions():
         self.parser.add_argument('--imW', type=int, default=416, help='imW')
         self.parser.add_argument('--max_lk_iter_num', type=int, default=10, help='maximum iteration for LK update')
 
-        self.parser.add_argument('--gpu_ids', type=str, default='0', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
+        self.parser.add_argument('--gpu_ids', type=str, default='4', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
         self.parser.add_argument('--name', type=str, default='experiment_name', help='name of the experiment. It decides where to store samples and models')
 
         self.parser.add_argument('--nThreads', default=2, type=int, help='# threads for loading data')
