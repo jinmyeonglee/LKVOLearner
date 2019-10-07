@@ -1,7 +1,7 @@
 PWD=$(pwd)
 # mkdir $PWD/checkpoints/
 EXPNAME=posenet
-CHECKPOINT_DIR=/data/log/checkpoints/$EXPNAME
+CHECKPOINT_DIR=/data/log/checkpoints_without_norm/$EXPNAME
 mkdir $CHECKPOINT_DIR
 DATAROOT_DIR=/data/prepared_raw_kitti
 CUDA_VISIBLE_DEVICES=4 python src/train_main_posenet.py --dataroot $DATAROOT_DIR\
