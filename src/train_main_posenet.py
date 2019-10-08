@@ -62,7 +62,7 @@ ref_frame_idx = 1
 
 
 def vis_depthmap(input):
-    # x = (input-input.min()) * (255/(input.max()-input.min()+.00001))
+    x = (input-input.min()) # * (255/(input.max()-input.min()+.00001))
     return x.unsqueeze(2).repeat(1, 1, 3)
 
 
@@ -78,7 +78,7 @@ for epoch in range(max(0, opt.which_epoch), opt.epoch_num+1):
         #depth = Variable(data[0]['depth'].cuda())
         camparams = Variable(data[1])
         cost, photometric_cost, smoothness_cost, frames, inv_depths, _ = \
-            sfmlearner.forward(frames,cropped, camparams)
+            sfmlearner.forward(frames, cropped, camparams)
         # print(frames.size())
         # print(inv_depths.size())
         cost_ = cost.data.cpu()
