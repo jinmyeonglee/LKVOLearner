@@ -13,6 +13,9 @@ import modeling
 import fdc
 import den
 
+sys.path.insert(0,"/root/LKVOLearner/src/util")
+from util.util import save_image
+
 
 DISP_SCALING = 10
 MIN_DISP = 0.01
@@ -180,12 +183,15 @@ class VggDepthEstimator(nn.Module):
         return invdepth_pyramid
 
 class FDCDepthEstimator(nn.Module):
+    index = None
+
     def __init__(self, input_size=None):
         super(FDCDepthEstimator, self).__init__()
         den_ = den.DEN()
         den_ = den_.to(device)
         den_.eval()
-
+        self.index = 0
+        
         self.fdc_model = FDCInverseDepthMap(den_)
         self.fdc_model.load_weights('/root/LKVOLearner/DEN/models/FDC/den_dbe/')
 
@@ -194,7 +200,9 @@ class FDCDepthEstimator(nn.Module):
         invdepth_pyramid = [[] for _ in range(len(sizes))]
 
         origin_indepth_map = self.fdc_model.getInverseDepthMap(input)
-
+        
+        save_image(origin_indepth_map, "/data/log/checkpoints/origin_invdepth_map_%d.mat" % (self.index))
+        self.index += 1
 
         for i in range(len(sizes)):  # num_pyrimid: 5
             for j in range(len(origin_indepth_map)):
