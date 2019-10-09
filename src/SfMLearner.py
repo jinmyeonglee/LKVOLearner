@@ -134,8 +134,8 @@ class SfMKernel(nn.Module):
 
         # normalize
         trans_batch = trans_batch*inv_depth_mean_ten
-        # inv_depth_norm_pyramid = [depth/inv_depth_mean_ten for depth in inv_depth_pyramid]
-        inv_depth_norm_pyramid = [depth for depth in inv_depth_pyramid]
+        inv_depth_norm_pyramid = [depth/inv_depth_mean_ten for depth in inv_depth_pyramid]
+        # inv_depth_norm_pyramid = [depth for depth in inv_depth_pyramid]
 
         ref_inv_depth_pyramid = [depth[ref_frame_idx, :, :] for depth in inv_depth_norm_pyramid]
         src_inv_depth_pyramid = [depth[src_frame_idx, :, :] for depth in inv_depth_norm_pyramid]
