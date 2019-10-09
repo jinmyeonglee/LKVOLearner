@@ -70,18 +70,6 @@ class Conv(nn.Module):
         else:
             return self.activation_fn(self.conv(self.pad_fn(input)))
 
-
-class FDCInverseDepthMap(fdc.FDC):
-    def getInverseDepthMap(self, batch):
-        predictions = fdc.FDC.__call__(self, batch)
-        print("predictions shape: ", len(predictions))
-        for i in range(len(predictions)):
-            for j in range(predictions[i].shape[0]):
-                predictions[i][j] = torch.tensor(list(map(lambda x: 0 if 1 / x == float('inf') else 1 / x, predictions[i][j])))
-        
-        return predictions
-
-
 class VggDepthEstimator(nn.Module):
     def __init__(self, input_size=None):
         super(VggDepthEstimator, self).__init__()
@@ -181,6 +169,17 @@ class VggDepthEstimator(nn.Module):
             print(i,': after squeeze',invdepth_pyramid[i].shape)
             print()
         return invdepth_pyramid
+
+
+class FDCInverseDepthMap(fdc.FDC):
+    def getInverseDepthMap(self, batch):
+        predictions = fdc.FDC.__call__(self, batch)
+        print("predictions shape: ", len(predictions))
+        for i in range(len(predictions)):
+            for j in range(predictions[i].shape[0]):
+                predictions[i][j] = torch.tensor(list(map(lambda x: 0 if 1 / x == float('inf') else 1 / x, predictions[i][j])))
+        
+        return predictions
 
 class FDCDepthEstimator(nn.Module):
     index = None
