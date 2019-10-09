@@ -16,7 +16,6 @@ import den
 sys.path.insert(0,"~/LKVOLearner/src/util")
 import util
 
-
 DISP_SCALING = 10
 MIN_DISP = 0.01
 
@@ -69,6 +68,18 @@ class Conv(nn.Module):
             return self.conv(self.pad_fn(input))
         else:
             return self.activation_fn(self.conv(self.pad_fn(input)))
+
+
+class FDCInverseDepthMap(fdc.FDC):
+    def getInverseDepthMap(self, batch):
+        predictions = fdc.FDC.__call__(self, batch)
+        # print("predictions shape: ", len(predictions))
+        for i in range(len(predictions)):
+            for j in range(predictions[i].shape[0]):
+                predictions[i][j] = torch.tensor(list(map(lambda x: 0 if 1 / x == float('inf') else 1 / x, predictions[i][j])))
+        
+        return predictions
+
 
 class VggDepthEstimator(nn.Module):
     def __init__(self, input_size=None):
@@ -170,27 +181,13 @@ class VggDepthEstimator(nn.Module):
             print()
         return invdepth_pyramid
 
-
-class FDCInverseDepthMap(fdc.FDC):
-    def getInverseDepthMap(self, batch):
-        predictions = fdc.FDC.__call__(self, batch)
-        print("predictions shape: ", len(predictions))
-        for i in range(len(predictions)):
-            for j in range(predictions[i].shape[0]):
-                predictions[i][j] = torch.tensor(list(map(lambda x: 0 if 1 / x == float('inf') else 1 / x, predictions[i][j])))
-        
-        return predictions
-
 class FDCDepthEstimator(nn.Module):
-    index = None
-
     def __init__(self, input_size=None):
         super(FDCDepthEstimator, self).__init__()
         den_ = den.DEN()
         den_ = den_.to(device)
         den_.eval()
-        self.index = 0
-        
+
         self.fdc_model = FDCInverseDepthMap(den_)
         self.fdc_model.load_weights('/root/LKVOLearner/DEN/models/FDC/den_dbe/')
 
@@ -198,13 +195,9 @@ class FDCDepthEstimator(nn.Module):
         sizes = [(128, 416), (64, 208), (32, 104), (16, 52), (8, 26)]
         invdepth_pyramid = [[] for _ in range(len(sizes))]
 
-        print("In FDCDepthEstimator input shape")
-        print(input.shape)
-
         origin_indepth_map = self.fdc_model.getInverseDepthMap(input)
-        
-        util.save_image(origin_indepth_map, "/data/log/checkpoints/origin_invdepth_map_%d.mat" % (self.index))
-        self.index += 1
+        # util.save_image(origin_indepth_map, "/data/log/checkpoints/origin_invdepth_map_%d.mat" % (self.index))
+        # self.index += 1
 
         for i in range(len(sizes)):  # num_pyrimid: 5
             for j in range(len(origin_indepth_map)):
