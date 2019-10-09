@@ -74,7 +74,7 @@ class Conv(nn.Module):
 class FDCInverseDepthMap(fdc.FDC):
     def getInverseDepthMap(self, batch):
         predictions = fdc.FDC.__call__(self, batch)
-        # print("predictions shape: ", len(predictions))
+        print("predictions shape: ", len(predictions))
         for i in range(len(predictions)):
             for j in range(predictions[i].shape[0]):
                 predictions[i][j] = torch.tensor(list(map(lambda x: 0 if 1 / x == float('inf') else 1 / x, predictions[i][j])))
@@ -198,6 +198,9 @@ class FDCDepthEstimator(nn.Module):
     def forward(self, input):
         sizes = [(128, 416), (64, 208), (32, 104), (16, 52), (8, 26)]
         invdepth_pyramid = [[] for _ in range(len(sizes))]
+
+        print("In FDCDepthEstimator input shape")
+        print(input.shape)
 
         origin_indepth_map = self.fdc_model.getInverseDepthMap(input)
         
