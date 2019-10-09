@@ -13,8 +13,8 @@ import modeling
 import fdc
 import den
 
-sys.path.insert(0,"/root/LKVOLearner/src/util")
-from util.util import save_image
+sys.path.insert(0,"~/LKVOLearner/src/util")
+import util
 
 
 DISP_SCALING = 10
@@ -201,7 +201,7 @@ class FDCDepthEstimator(nn.Module):
 
         origin_indepth_map = self.fdc_model.getInverseDepthMap(input)
         
-        save_image(origin_indepth_map, "/data/log/checkpoints/origin_invdepth_map_%d.mat" % (self.index))
+        util.save_image(origin_indepth_map, "/data/log/checkpoints/origin_invdepth_map_%d.mat" % (self.index))
         self.index += 1
 
         for i in range(len(sizes)):  # num_pyrimid: 5
