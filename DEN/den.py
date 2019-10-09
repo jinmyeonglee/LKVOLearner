@@ -50,6 +50,7 @@ class DEN(nn.Module):
         
     def _init_resnet(self, resnet, backbone_wts):
         num_ftrs = resnet.fc.in_features
+        print("fc", num_ftrs, "x", 128*416)
         resnet.fc = nn.Linear(num_ftrs, 128 * 416)
         resnet.load_state_dict(torch.load(backbone_wts))
 
@@ -78,24 +79,29 @@ class DEN(nn.Module):
         flattened += list(model.children())[-2:]
 
         self.resnet_top = nn.Sequential(*flattened[:35])
-        self.resnet_mid = nn.ModuleList(flattened[35:54])
+        # self.resnet_mid = nn.ModuleList(flattened[35:54])
+        self.resnet_mid = nn.ModuleList(flattened[35:51])
         self.avg_pool2d = flattened[54]
         self.fc = nn.Linear(25280, 128 * 416)
-     
+        # self.fc = nn.Linear(59392, 128*416)
     
     def forward(self, input):
-        
+        # print("right after in den", input.shape) 
         x = self.resnet_top(input)
-        
+        # print("after resnet_top", x.shape)
         outputs = []
         for i, block in enumerate(self.resnet_mid):
             x = block(x)
+            # print("resnet_mid loop", x.shape)
             outputs.append(self.aux_modules[i](x))
             
         x = self.avg_pool2d(x)
+        print("after pooling", x.shape)
         x = x.view(x.shape[0], -1)
         outputs.append(x)
         outputs_concat = torch.cat(outputs, dim=1)
+        print("output concat", outputs_concat.shape)
         out = self.fc(outputs_concat)
+        print("output shape", out.shape)
 
         return out

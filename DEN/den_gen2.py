@@ -44,7 +44,7 @@ class DEN(nn.Module):
         
     def _init_resnet(self, resnet, backbone_wts):
         num_ftrs = resnet.fc.in_features
-        resnet.fc = nn.Linear(num_ftrs, 25 * 32)
+        resnet.fc = nn.Linear(num_ftrs, 128 * 416)
         resnet.load_state_dict(torch.load(backbone_wts))
 
         return resnet
