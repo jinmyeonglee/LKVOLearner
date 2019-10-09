@@ -128,12 +128,12 @@ class SfMKernel(nn.Module):
 
         # TODO: change depth_net VGG to FDCDepthEstimator
         # inv_depth_pyramid : not cropped depth
-        # input frames : cropped frames
-        inv_depth_pyramid = self.depth_net.forward((cropped-127)/127)
-        # inv_depth_mean_ten = inv_depth_pyramid[0].mean()*0.1 #uncommment this to use normalization
+        # input frames : cropped frames        
+        inv_depth_pyramid = self.depth_net.forward((cropped-127)/127) # 왜 여기서 나는지 몰겠네;
+        inv_depth_mean_ten = inv_depth_pyramid[0].mean()*0.1 #uncommment this to use normalization
 
         # normalize
-        #trans_batch = trans_batch*inv_depth_mean_ten
+        trans_batch = trans_batch*inv_depth_mean_ten
         # inv_depth_norm_pyramid = [depth/inv_depth_mean_ten for depth in inv_depth_pyramid]
         inv_depth_norm_pyramid = [depth for depth in inv_depth_pyramid]
 
