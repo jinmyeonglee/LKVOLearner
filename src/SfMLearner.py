@@ -88,6 +88,8 @@ class SfMKernel(nn.Module):
         frames = frames.squeeze(0)
         cropped = cropped.squeeze(0)
         camparams = camparams.squeeze(0).data
+        print("cropped shape")
+        print(cropped.shape)
 
 
         if do_data_augment:
@@ -98,8 +100,8 @@ class SfMKernel(nn.Module):
         bundle_size = frames.size(0)
         src_frame_idx = tuple(range(0,ref_frame_idx)) + tuple(range(ref_frame_idx+1,bundle_size))
         frames_pyramid = self.vo.pyramid_func(frames)#not cropped frame
-        # for frame in frames_pyramid :
-        #     print(frame.shape)
+        for frame in frames_pyramid :
+            print(frame.shape)
         ref_frame_pyramid = [frame[ref_frame_idx, :, :, :] for frame in frames_pyramid]
         src_frames_pyramid = [frame[src_frame_idx, :, :, :] for frame in frames_pyramid]
 
@@ -130,12 +132,12 @@ class SfMKernel(nn.Module):
         # inv_depth_pyramid : not cropped depth
         # input frames : cropped frames        
         inv_depth_pyramid = self.depth_net.forward((cropped-127)/127) # 왜 여기서 나는지 몰겠네;
-        inv_depth_mean_ten = inv_depth_pyramid[0].mean()*0.1 #uncommment this to use normalization
+        # inv_depth_mean_ten = inv_depth_pyramid[0].mean()*0.1 #uncommment this to use normalization
 
         # normalize
-        trans_batch = trans_batch*inv_depth_mean_ten
-        inv_depth_norm_pyramid = [depth/inv_depth_mean_ten for depth in inv_depth_pyramid]
-        # inv_depth_norm_pyramid = [depth for depth in inv_depth_pyramid]
+        # trans_batch = trans_batch*inv_depth_mean_ten
+        # inv_depth_norm_pyramid = [depth/inv_depth_mean_ten for depth in inv_depth_pyramid]
+        inv_depth_norm_pyramid = [depth for depth in inv_depth_pyramid]
 
         ref_inv_depth_pyramid = [depth[ref_frame_idx, :, :] for depth in inv_depth_norm_pyramid]
         src_inv_depth_pyramid = [depth[src_frame_idx, :, :] for depth in inv_depth_norm_pyramid]
